@@ -1,17 +1,22 @@
 -- Disable foreign key checks before dropping tables
 SET FOREIGN_KEY_CHECKS=0; 
 
-DROP TABLE IF EXISTS Festival;
 DROP TABLE IF EXISTS Location;
-DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS Festival;
 DROP TABLE IF EXISTS Stage;
+DROP TABLE IF EXISTS Event;
 DROP TABLE IF EXISTS Staff;
-DROP TABLE IF EXISTS Performance;
 DROP TABLE IF EXISTS Performer;
+DROP TABLE IF EXISTS Solo_Artists;
 DROP TABLE IF EXISTS Band;
 DROP TABLE IF EXISTS Band_member;
-DROP TABLE IF EXISTS Solo_Artists;
+DROP TABLE IF EXISTS Performance;
 DROP TABLE IF EXISTS Visitor;
+DROP TABLE IF EXISTS Ticket;
+DROP TABLE IF EXISTS Rating;
+DROP TABLE IF EXISTS Resale_Buyer;
+DROP TABLE IF EXISTS Resale_Queue;
+DROP TABLE IF EXISTS Works_on;
 
 -- Enables again foreign keys
 SET FOREIGN_KEY_CHECKS = 1;
@@ -32,13 +37,14 @@ CREATE TABLE IF NOT EXISTS Location (
 -- Festival Table
 CREATE TABLE IF NOT EXISTS Festival (
     festival_id INT NOT NULL PRIMARY KEY,
+    location_id INT NOT NULL,
     year INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     duration_days INT,
     duration_per_day INT,
     photo_url TEXT NOT NULL, 
     photo_description TEXT NOT NULL,
-    location_id INT NOT NULL,
+    
     FOREIGN KEY (location_id) REFERENCES Location(location_id)
 );
 
@@ -76,6 +82,9 @@ CREATE TABLE IF NOT EXISTS Staff (
     experience INT NOT NULL,
     photo_url TEXT NOT NULL, 
     photo_description TEXT NOT NULL
+
+    CONSTRAINT chk_experience CHECK ( experience IN ('Trainee', 'Beginner', 'Intermediate', 'Experienced', 'Highly Experienced'))
+
 );
 
 -- Performer Table
@@ -104,6 +113,8 @@ CREATE TABLE IF NOT EXISTS Band (
     band_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     formation_date DATE,
+    member_list TEXT,
+    instagram TEXT,
     website TEXT,
     photo_url TEXT,
     photo_description TEXT
@@ -111,7 +122,7 @@ CREATE TABLE IF NOT EXISTS Band (
 -- For now its only many to one relationship
 CREATE TABLE IF NOT EXISTS Band_member (
     performer_id INT NOT NULL PRIMARY KEY,
-    band_id INT NOT NULL,
+    band_id INT NOT NULL PRIMARY KEY,
     FOREIGN KEY (performer_id) REFERENCES Performer(performer_id),
     FOREIGN KEY (band_id) REFERENCES Band(band_id)
 );
@@ -119,7 +130,7 @@ CREATE TABLE IF NOT EXISTS Band_member (
 CREATE TABLE IF NOT EXISTS Performance (
     performance_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
-    stage_id INT NOT NULL, 
+    --stage_id INT NOT NULL, 
     performer_id INT NOT NULL,
     type_of_performance VARCHAR(255) NOT NULL,
     duration FLOAT NOT NULL, 
@@ -129,7 +140,7 @@ CREATE TABLE IF NOT EXISTS Performance (
     photo_description TEXT,
 
     FOREIGN KEY(event_id) REFERENCES Event(event_id),
-    FOREIGN KEY(stage_id) REFERENCES Stage(stage_id),
+    --FOREIGN KEY(stage_id) REFERENCES Stage(stage_id),
     FOREIGN KEY(performer_id) REFERENCES Performer(performer_id) 
 );
 
@@ -143,13 +154,15 @@ CREATE TABLE IF NOT EXISTS Visitor (
     phone_number VARCHAR(20) NOT NULL,
     photo_url TEXT,
     photo_description TEXT
+
+    CONSTRAINT chk_age CHECK (age >= 12 AND age <= 99)
 );
 
 -- Ticket Table
 CREATE TABLE IF NOT EXISTS Ticket (
     ticket_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
-    stage_id INT NOT NULL, 
+    --stage_id INT NOT NULL, 
     visitor_id INT NOT NULL,
     ticket_type VARCHAR(40) NOT NULL,
     purchase_date DATE NOT NULL,
@@ -160,8 +173,10 @@ CREATE TABLE IF NOT EXISTS Ticket (
     photo_url TEXT,
     photo_description TEXT,
     FOREIGN KEY (event_id) REFERENCES Event(event_id),
-    FOREIGN KEY (stage_id) REFERENCES Stage(stage_id),
+    --FOREIGN KEY (stage_id) REFERENCES Stage(stage_id),
     FOREIGN KEY (visitor_id) REFERENCES Visitor(visitor_id)
+
+    CONSTRAINT chk_ticket_type CHECK (ticket_type IN ('VIP', 'General', 'Backstage'))
 );
 
 -- Rating Table (we use likert rating)
@@ -211,6 +226,17 @@ CREATE TABLE IF NOT EXISTS Resale_Queue (
     FOREIGN KEY (preferred_event_id) REFERENCES Event(event_id)
 );
 
+-- Works on Table
+CREATE TABLE IF NOT EXISTS Works_on (
+    staff_id INT NOT NULL,
+    stage_id INT NOT NULL,
+    event_id INT NOT NULL,
+
+    PRIMARY KEY (stage_id, staff_id, event_id),
+    FOREIGN KEY (staff_id) REFERENCES Staff(staff_id),
+    FOREIGN KEY (stage_id) REFERENCES Stage(stage_id),
+    FOREIGN KEY (event_id) REFERENCES Event(event_id)
+);
 
 -- Creating Indexes after all tables are created
 CREATE INDEX idx_performer_nickname ON Performer(nickname);
