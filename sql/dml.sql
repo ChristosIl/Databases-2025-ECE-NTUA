@@ -4,7 +4,11 @@ SET foreign_key_checks = 0;
 TRUNCATE TABLE Continent;
 TRUNCATE TABLE Location;
 TRUNCATE TABLE Festival;
-
+TRUNCATE TABLE Staff_role;
+TRUNCATE TABLE Experience_level;
+TRUNCATE TABLE Performance;
+TRUNCATE TABLE Performer;
+TRUNCATE TABLE Stage;
 -- Re-enable foreign key checks
 SET foreign_key_checks = 1;
 
@@ -19,6 +23,31 @@ VALUES
 (5, 'North America'),
 (6, 'Australia'),
 (7, 'South America');
+
+INSERT INTO Staff_role (staff_role_id, name)
+VALUES
+(1, 'Technical_staff'),
+(2, 'Security Staff'),
+(3, 'Helping Staff');
+
+INSERT INTO Experience_level (experience_id, name)
+VALUES
+(1, 'Trainee'),
+(2, 'Beginner'),
+(3, 'Intermediate'),
+(4, 'Experienced'),
+(5, 'Highly Experienced');
+
+INSERT INTO Ticket_type (ticket_type_id, name)
+VALUES
+(1, 'VIP'),
+(2, 'General'),
+(3, 'Backstage');
+
+--Populate Stage Table (testing for question 2)
+INSERT INTO Stage (stage_id, name, description, max_capacity, infos_technical_equipment, photo_url, photo_description)
+VALUES 
+(1, 'Main Stage', 'Biggest stage of the fest', 5000, 'Lights, sound system, pyrotechnics', 'url', 'desc');
 
 -- Populate Location Table (15 values)
 INSERT INTO Location (address, city, longitude, latitude, country, continent_id, photo_url, photo_description)
@@ -55,3 +84,28 @@ VALUES
 (5, 2025, 'Unity Fest', 3, 'http://dummyimage.com/200x100.png/007bff/ffffff', 'A global unity celebration through music.');
 
 
+
+--Populate Event Table (testing for question 2)
+INSERT INTO Event (event_id, festival_id, stage_id, event_name, event_date, duration, photo_url, photo_description)
+VALUES 
+(1, 1, 1, 'Rock Night', '2024-06-21', 5, 'url', 'desc');
+
+
+--Populate Performance Table (testing for question 2)
+INSERT INTO Performer (performer_id, name, nickname, birth_date, is_solo, music_genres, sub_music_genres, website, instagram, photo_url, photo_description)
+VALUES
+(1, 'The Rockers', NULL, '1990-01-01', FALSE, 'Rock', 'Hard Rock', NULL, NULL, 'url', 'desc'),
+(2, 'Smooth Jazz Band', NULL, '1995-05-20', FALSE, 'Jazz', 'Smooth Jazz', NULL, NULL, 'url', 'desc'),
+(3, 'Electro Beat', NULL, '1992-03-10', TRUE, 'Electronic', 'Synthpop', NULL, NULL, 'url', 'desc'),
+(4, 'Another Rocker', NULL, '1994-09-15', TRUE, 'Rock', 'Alternative Rock', NULL, NULL, 'url', 'desc');
+
+
+-- Populate Performances Table (testing for question 2)
+INSERT INTO Performance (performance_id, event_id, performer_id, type_of_performance, duration, start_time, end_time, photo_url, photo_description)
+VALUES
+(1, 1, 1, 'Headline', 2, 18.00, 20.00, 'url', 'desc'),
+(2, 1, 4, 'Warm Up', 1.5, 16.00, 17.30, 'url', 'desc');
+
+
+
+--TODO: Correct the queries and the queue of insertion of them

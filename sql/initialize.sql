@@ -6,11 +6,14 @@ DROP TABLE IF EXISTS Location;
 DROP TABLE IF EXISTS Festival;
 DROP TABLE IF EXISTS Stage;
 DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS Staff_role;
+DROP TABLE IF EXISTS Experience_level;
 DROP TABLE IF EXISTS Staff;
 DROP TABLE IF EXISTS Performer;
 DROP TABLE IF EXISTS Band;
 DROP TABLE IF EXISTS Performance;
 DROP TABLE IF EXISTS Visitor;
+DROP TABLE IF EXISTS Ticket_type;
 DROP TABLE IF EXISTS Ticket;
 DROP TABLE IF EXISTS Rating;
 DROP TABLE IF EXISTS Resale_Buyer;
@@ -80,18 +83,29 @@ CREATE TABLE IF NOT EXISTS Event (
     FOREIGN KEY (stage_id) REFERENCES Stage(stage_id)
 );
 
+-- Staff Role Table 
+CREATE TABLE IF NOT EXISTS Staff_role (
+    staff_role_id INT NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Experience_level (
+    experience_id INT NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Staff Table
 CREATE TABLE IF NOT EXISTS Staff (
     staff_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     age INT NOT NULL,
-    role VARCHAR(255) NOT NULL,
-    experience INT NOT NULL,
+    staff_role_id INT NOT NULL,
+    experience_id INT NOT NULL,
     photo_url TEXT NOT NULL, 
     photo_description TEXT NOT NULL,
 
-    CONSTRAINT chk_experience CHECK ( experience IN ('Trainee', 'Beginner', 'Intermediate', 'Experienced', 'Highly Experienced'))
-
+    FOREIGN KEY (staff_role_id) REFERENCES Staff_role(staff_role_id),
+    FOREIGN KEY (experience_id) REFERENCES Experience_level(experience_id)
 );
 
 -- Performer Table
@@ -150,12 +164,18 @@ CREATE TABLE IF NOT EXISTS Visitor (
     CONSTRAINT chk_age CHECK (age >= 12 AND age <= 99)
 );
 
+-- Ticket Type Table
+CREATE TABLE IF NOT EXISTS Ticket_type (
+    ticket_type_id INT NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Ticket Table
 CREATE TABLE IF NOT EXISTS Ticket (
     ticket_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
     visitor_id INT NOT NULL,
-    ticket_type VARCHAR(40) NOT NULL,
+    ticket_type_id INT NOT NULL,
     purchase_date DATE NOT NULL,
     price DECIMAL(6,2) NOT NULL,     
     payment_method VARCHAR(40) NOT NULL,
@@ -165,8 +185,7 @@ CREATE TABLE IF NOT EXISTS Ticket (
     photo_description TEXT,
     FOREIGN KEY (event_id) REFERENCES Event(event_id),
     FOREIGN KEY (visitor_id) REFERENCES Visitor(visitor_id),
-
-    CONSTRAINT chk_ticket_type CHECK (ticket_type IN ('VIP', 'General', 'Backstage'))
+    FOREIGN KEY (ticket_type_id) REFERENCES Ticket_type(ticket_type_id)
 );
 
 -- Rating Table (we use likert rating)
