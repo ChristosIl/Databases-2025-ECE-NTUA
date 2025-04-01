@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Staff;
 DROP TABLE IF EXISTS Performer;
 DROP TABLE IF EXISTS Band;
 DROP TABLE IF EXISTS Performance;
+DROP TABLE IF EXISTS Payment_method;
 DROP TABLE IF EXISTS Visitor;
 DROP TABLE IF EXISTS Ticket_type;
 DROP TABLE IF EXISTS Ticket;
@@ -20,6 +21,7 @@ DROP TABLE IF EXISTS Resale_Buyer;
 DROP TABLE IF EXISTS Resale_Queue;
 DROP TABLE IF EXISTS Works_on;
 DROP TABLE IF EXISTS Belongs_to;
+
 -- Enables again foreign keys
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -89,6 +91,7 @@ CREATE TABLE IF NOT EXISTS Staff_role (
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
+-- Experience level Lookup Table
 CREATE TABLE IF NOT EXISTS Experience_level (
     experience_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
@@ -135,6 +138,7 @@ CREATE TABLE IF NOT EXISTS Band (
     photo_description TEXT
 );
 
+-- Performance Table
 CREATE TABLE IF NOT EXISTS Performance (
     performance_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
@@ -156,18 +160,31 @@ CREATE TABLE IF NOT EXISTS Visitor (
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     age INT NOT NULL,
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     phone_number VARCHAR(20) NOT NULL,
     photo_url TEXT,
     photo_description TEXT,
 
-    CONSTRAINT chk_age CHECK (age >= 12 AND age <= 99)
+    CONSTRAINT check_age CHECK (age >= 12 AND age <= 99),
+    CONSTRAINT check_email
+        CHECK (
+            email IS NULL OR
+            email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        )
 );
 
 -- Ticket Type Table
 CREATE TABLE IF NOT EXISTS Ticket_type (
     ticket_type_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Payment_method Lookup Table
+CREATE TABLE IF NOT EXISTS Payment_method ( 
+    payment_method_id INT NOT NULL PRIMARY KEY, 
+    name VARCHAR(50) NOT NULL UNIQUE,
+
+    CONSTRAINT chk_payment_method CHECK (name IN ('Credit Card', 'Debit Card', 'Bank Transfer'))    
 );
 
 -- Ticket Table
@@ -178,14 +195,19 @@ CREATE TABLE IF NOT EXISTS Ticket (
     ticket_type_id INT NOT NULL,
     purchase_date DATE NOT NULL,
     price DECIMAL(6,2) NOT NULL,     
-    payment_method VARCHAR(40) NOT NULL,
+    payment_method_id INT NOT NULL,
     ean_code VARCHAR(20) NOT NULL,
-    used BOOLEAN NOT NULL,
+    used BOOLEAN NOT NULL DEFAULT FALSE,
     photo_url TEXT,
     photo_description TEXT,
     FOREIGN KEY (event_id) REFERENCES Event(event_id),
     FOREIGN KEY (visitor_id) REFERENCES Visitor(visitor_id),
-    FOREIGN KEY (ticket_type_id) REFERENCES Ticket_type(ticket_type_id)
+    FOREIGN KEY (ticket_type_id) REFERENCES Ticket_type(ticket_type_id),
+    FOREIGN KEY (payment_method_id) REFERENCES Payment_method(payment_method_id),
+
+    CONSTRAINT check_price_be_over_zero CHECK (price > 0),
+    CONSTRAINT check_used_value CHECK (used IS TRUE OR used IS FALSE)
+    
 );
 
 -- Rating Table (we use likert rating)
@@ -210,10 +232,17 @@ CREATE TABLE IF NOT EXISTS Resale_Buyer (
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     age INT NOT NULL,
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     phone_number VARCHAR(20),
     photo_url TEXT,
-    photo_description TEXT
+    photo_description TEXT,
+
+    CONSTRAINT chk_age CHECK (age >= 12 AND age <= 99),
+    CONSTRAINT chk_email
+        CHECK (
+            email IS NULL OR
+            email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        )
 );
 
 -- Resale Ticket Table

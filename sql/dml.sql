@@ -27,12 +27,14 @@
     (6, 'Australia'),
     (7, 'South America');
 
+    -- Populate Staff role Table
     INSERT INTO Staff_role (staff_role_id, name)
     VALUES
     (1, 'Technical_staff'),
     (2, 'Security Staff'),
     (3, 'Helping Staff');
 
+    -- Populate Experience level Table
     INSERT INTO Experience_level (experience_id, name)
     VALUES
     (1, 'Trainee'),
@@ -41,11 +43,20 @@
     (4, 'Experienced'),
     (5, 'Highly Experienced');
 
+    -- Populate Ticket_type Table
     INSERT INTO Ticket_type (ticket_type_id, name)
     VALUES
     (1, 'VIP'),
     (2, 'General'),
     (3, 'Backstage');
+
+    -- Populate Payment_method Table
+    INSERT INTO Payment_method (payment_method_id, name)
+    VALUES
+    (1, 'Credit Card'),
+    (2, 'Debit Card'),
+    (3, 'Bank Transfer');
+
 
     /*Populate Stage Table (testing for question 2)*/
     INSERT INTO Stage (name, description, max_capacity, infos_technical_equipment, photo_url, photo_description)
@@ -110,5 +121,8 @@
     (2, 1, 4, 'Warm Up', 1.5, 16.00, 17.30, 'url', 'desc');
 
 
-
+    /*Populate visitor*/
+    INSERT INTO Visitor (visitor_id, name, surname, age, email, phone_number, photo_url, photo_description)
+    VALUES
+    (1, 'Christos', 'Iliak', 18, 'sad@gmail.com', '3245823598', NULL, NULL);
     /*TODO: Correct the queries and the queue of insertion of them*/
