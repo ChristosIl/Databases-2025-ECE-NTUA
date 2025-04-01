@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS Festival (
 
 -- Stage Table
 CREATE TABLE IF NOT EXISTS Stage (
-    stage_id INT NOT NULL PRIMARY KEY,
+    stage_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,       
     description TEXT,                 
     max_capacity INT,                 
