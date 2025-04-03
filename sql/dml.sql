@@ -2,15 +2,20 @@
     SET foreign_key_checks = 0;
 
     TRUNCATE TABLE Continent;
-    TRUNCATE TABLE Location;
-    TRUNCATE TABLE Festival;
     TRUNCATE TABLE Staff_role;
     TRUNCATE TABLE Experience_level;
-    TRUNCATE TABLE Performance;
-    TRUNCATE TABLE Event;
+    TRUNCATE TABLE Ticket_type;
+    TRUNCATE TABLE Payment_method;
     TRUNCATE TABLE Stage;
+    TRUNCATE TABLE Location;
+    TRUNCATE TABLE Festival;
+    TRUNCATE TABLE Event;
     TRUNCATE TABLE Performer;
-
+    TRUNCATE TABLE Performance;
+    TRUNCATE TABLE Visitor;
+    TRUNCATE TABLE Ticket;
+    TRUNCATE TABLE Resale_Buyer;
+    TRUNCATE TABLE Resale_Queue;
 
     -- Reenable foreign key checks
     SET foreign_key_checks = 1;
@@ -125,4 +130,18 @@
     INSERT INTO Visitor (visitor_id, name, surname, age, email, phone_number, photo_url, photo_description)
     VALUES
     (1, 'Christos', 'Iliak', 18, 'sad@gmail.com', '3245823598', NULL, NULL);
+
+
+    INSERT INTO Ticket (ticket_id, event_id, visitor_id, ticket_type_id, purchase_date, price, payment_method_id, ean_code, used, photo_url, photo_description)
+    VALUES
+    (1, 1, 1, 1, '2025-06-02 14:30:00', 120.00, 1, '1234567890123', FALSE, NULL, NULL),
+    (2, 1, 1, 1, '2025-06-03 14:00:00', 130.00, 1, '1234567890155', FALSE, NULL, NULL);
+    
+    INSERT INTO Resale_Buyer (buyer_id, name, surname, age, email, phone_number, photo_url, photo_description)
+    VALUES (1, 'Alexandra', 'Papadopoulou', 28, 'alexandra.p@example.com', '+306912345678', 'http://dummyimage.com/200x100.png/5fa2dd/ffffff', 'Profile photo of Alexandra at a concert.');
+
+
+    INSERT INTO Resale_Queue (resale_id, ticket_id, seller_id, buyer_id, request_date, listing_date, purchase_date, preferred_event_id, preferred_ticket_type, status) 
+    VALUES (1, 1, 1, 1, '2025-04-01', NULL, NULL, 1, 'VIP', 'Pending');
+
     /*TODO: Correct the queries and the queue of insertion of them*/
