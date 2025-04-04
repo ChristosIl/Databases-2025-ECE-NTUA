@@ -20,6 +20,8 @@ DROP TABLE IF EXISTS Rating;
 DROP TABLE IF EXISTS Resale_Buyer;
 DROP TABLE IF EXISTS Resale_Queue;
 DROP TABLE IF EXISTS Works_on;
+DROP TABLE IF EXISTS Demand_queue;
+DROP TABLE IF EXISTS Buys_specific_ticket;
 DROP TABLE IF EXISTS Belongs_to;
 
 -- Enables again foreign keys
@@ -250,18 +252,12 @@ CREATE TABLE IF NOT EXISTS Resale_Queue (
     resale_id INT NOT NULL PRIMARY KEY,
     ticket_id INT NOT NULL,
     seller_id INT NOT NULL,  /* first owner of the ticket */
-    buyer_id INT,  
-    request_date DATE NOT NULL,
     listing_date DATE,
-    purchase_date DATE,
-    preferred_event_id INT,
-    preferred_ticket_type VARCHAR(50),
-    status VARCHAR(50), 
+    price INT NOT NULL,
+    status BOOLEAN NOT NULL, 
 
     FOREIGN KEY (ticket_id) REFERENCES Ticket(ticket_id) ,
     FOREIGN KEY (seller_id) REFERENCES Visitor(visitor_id) ,
-    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id),
-    FOREIGN KEY (preferred_event_id) REFERENCES Event(event_id)
 );
 
 -- Works on Table
@@ -274,6 +270,27 @@ CREATE TABLE IF NOT EXISTS Works_on (
     FOREIGN KEY (staff_id) REFERENCES Staff(staff_id),
     FOREIGN KEY (stage_id) REFERENCES Stage(stage_id),
     FOREIGN KEY (event_id) REFERENCES Event(event_id)
+);
+
+CREATE TABLE IF NOT EXISTS Demand_queue(
+    demand_id INT NOT NULL PRIMARY KEY,
+    buyer_id INT NOT NULL,
+    preferred_ticket_type INT,
+    preferred_event_id INT,
+    request_date DATE NOT NULL,
+
+    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id)
+);
+
+-- Table to store logs from direct buys
+CREATE TABLE IF NOT EXISTS Buys_specific_ticket(
+    buyer_id INT NOT NULL,
+    resale_id INT NOT NULL,
+    interest_date DATE,
+    status VARCHAR(20),
+
+    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id),
+    PRIMARY KEY (buyer_id, resale_id)
 );
 
 -- Belongs to Table 
