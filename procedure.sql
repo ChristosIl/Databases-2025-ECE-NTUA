@@ -16,7 +16,7 @@
 
 DELIMITER $$
 
-CREATE PROCEDURE buy_specific_ticket(
+CREATE PROCEDURE buy_specific_ticket(   
     IN in_buyer_id INT,
     IN in_resale_id INT
 )

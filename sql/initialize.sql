@@ -253,11 +253,11 @@ CREATE TABLE IF NOT EXISTS Resale_Queue (
     ticket_id INT NOT NULL,
     seller_id INT NOT NULL,  /* first owner of the ticket */
     listing_date DATE,
-    price INT NOT NULL,
+    price  FLOAT(6,2) NOT NULL,
     status BOOLEAN NOT NULL, 
 
     FOREIGN KEY (ticket_id) REFERENCES Ticket(ticket_id) ,
-    FOREIGN KEY (seller_id) REFERENCES Visitor(visitor_id) ,
+    FOREIGN KEY (seller_id) REFERENCES Visitor(visitor_id) 
 );
 
 -- Works on Table

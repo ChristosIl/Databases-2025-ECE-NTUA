@@ -51,16 +51,25 @@ BEGIN
 
     DECLARE current_count INT;
     DECLARE max_capacity INT;
+    DECLARE event_id_for_ticket INT;
 
+/*Get event id from ticket*/
+SELECT event_id INTO event_id_for_ticket
+FROM Ticket
+WHERE ticket_id = NEW.ticket_id;
+
+/*Count how many tickets have been sold for specific event*/
 SELECT COUNT(*) INTO current_count
 FROM Ticket 
-WHERE event_id = NEW.preferred_event_id;
+WHERE event_id = event_id_for_ticket;
 
+/*Load Capacity of stage that is connected to the event*/
 SELECT s.max_capacity INTO max_capacity
 FROM Event e
 JOIN Stage s ON e.stage_id = s.stage_id
-WHERE e.event_id = NEW.preferred_event_id;
+WHERE e.event_id = event_id_for_ticket;
 
+/*Check if you can activate resale queue*/
 IF current_count < max_capacity THEN
     SIGNAL SQLSTATE '45000'
     SET MESSAGE_TEXT = 'Resale queue is not available. Event not sold out yet.';
