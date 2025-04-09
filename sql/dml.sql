@@ -475,7 +475,9 @@
     (14, 'Christos', 'Zervos', 35, 'christos.z@example.com', '+306923456780', 'http://dummyimage.com/200x100.png/ffc107/000000', 'Christos with LED bracelets.'),
     (15, 'Georgia', 'Lambrou', 26, 'georgia.l@example.com', '+306924567891', 'http://dummyimage.com/200x100.png/cc0000/ffffff', 'Georgia under the fireworks.'),
     (16, 'Apostolos', 'Venieris', 29, 'apostolos.v@example.com', '+306925678902', 'http://dummyimage.com/200x100.png/dddddd/000000', 'Apostolos taking selfies at the dome.');
+    
 
+    /*To check the trigger for resale queue insertion run first the demand queue inserts and then these*/
     INSERT INTO Resale_Queue (resale_id, ticket_id, seller_id, listing_date, price, status) 
     VALUES 
     (1, 2, 1, CURDATE(), 130.00, FALSE),
