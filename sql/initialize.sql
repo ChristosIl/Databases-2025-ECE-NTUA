@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS Works_on;
 DROP TABLE IF EXISTS Demand_queue;
 DROP TABLE IF EXISTS Buys_specific_ticket;
 DROP TABLE IF EXISTS Belongs_to;
+DROP TABLE IF EXISTS Resale_Log;
 
 -- Enables again foreign keys
 SET FOREIGN_KEY_CHECKS = 1;
@@ -158,7 +159,7 @@ CREATE TABLE IF NOT EXISTS Performance (
 
 -- Visitor Table
 CREATE TABLE IF NOT EXISTS Visitor (
-    visitor_id INT NOT NULL PRIMARY KEY,
+    visitor_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     age INT NOT NULL,
@@ -272,14 +273,15 @@ CREATE TABLE IF NOT EXISTS Works_on (
     FOREIGN KEY (event_id) REFERENCES Event(event_id)
 );
 
-CREATE TABLE IF NOT EXISTS Demand_queue(
+CREATE TABLE IF NOT EXISTS Demand_Queue(
     demand_id INT NOT NULL PRIMARY KEY,
     buyer_id INT NOT NULL,
     preferred_ticket_type INT,
     preferred_event_id INT,
     request_date DATE NOT NULL,
+    status BOOLEAN NOT NULL DEFAULT FALSE, 
 
-    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id)
+    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id) ON DELETE CASCADE
 );
 
 -- Table to store logs from direct buys
@@ -289,7 +291,7 @@ CREATE TABLE IF NOT EXISTS Buys_specific_ticket(
     interest_date DATE,
     status VARCHAR(20),
 
-    FOREIGN KEY (buyer_id) REFERENCES Resale_Buyer(buyer_id),
+    
     PRIMARY KEY (buyer_id, resale_id)
 );
 
@@ -303,6 +305,14 @@ CREATE TABLE IF NOT EXISTS Belongs_to (
     FOREIGN KEY (band_id) REFERENCES Band(band_id)
 );
 
+CREATE TABLE Resale_Log (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    ticket_id INT,
+    old_owner_id INT,
+    new_owner_id INT,
+    sale_price DECIMAL(10,2),
+    sale_date DATETIME DEFAULT NOW()
+);
 
 -- Creating Indexes after all tables are created
 CREATE INDEX idx_performer_nickname ON Performer(nickname);

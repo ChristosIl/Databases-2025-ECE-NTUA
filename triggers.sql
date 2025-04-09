@@ -79,6 +79,82 @@ END IF;
 END;
 
 //
+
+
+CREATE TRIGGER trg_after_resale_insert
+AFTER INSERT ON Resale_Queue
+FOR EACH ROW
+BEGIN
+    DECLARE v_demand_id INT;
+    DECLARE v_buyer_id INT;
+    DECLARE ticket_count INT;
+    DECLARE new_visitor_id INT;
+
+    /* Βρες matching demand (με βάση event και ticket type)*/
+    SELECT dq.demand_id, dq.buyer_id
+    INTO v_demand_id, v_buyer_id
+    FROM Demand_Queue dq
+    JOIN Ticket t ON t.ticket_id = NEW.ticket_id
+    WHERE dq.preferred_event_id = t.event_id
+      AND dq.preferred_ticket_type = t.ticket_type_id
+      AND dq.status = FALSE
+    LIMIT 1;
+
+    /*Αν υπάρχει matching demand*/
+    IF v_demand_id IS NOT NULL THEN
+
+        /*Count how many tickets the seller owns*/
+        SELECT COUNT(*) INTO ticket_count
+        FROM Ticket
+        WHERE visitor_id = NEW.seller_id;
+
+        IF ticket_count > 1 THEN
+             /*Create new visitor from Resale_Buyer info*/
+            INSERT INTO Visitor (name, surname, age, email, phone_number, photo_url, photo_description)
+            SELECT name, surname, age, email, phone_number, photo_url, photo_description
+            FROM Resale_Buyer
+            WHERE buyer_id = v_buyer_id;
+
+            /*Get the new visitor_id*/
+            SET new_visitor_id = LAST_INSERT_ID();
+
+             /*Reassign ticket to new visitor*/
+            UPDATE Ticket
+            SET visitor_id = new_visitor_id
+            WHERE ticket_id = NEW.ticket_id;
+        ELSE
+            /* Κάνε update τα στοιχεία του επισκέπτη με του αγοραστή*/
+            UPDATE Visitor
+            JOIN Resale_Buyer rb ON rb.buyer_id = v_buyer_id
+            SET 
+                Visitor.name = rb.name,
+                Visitor.surname = rb.surname,
+                Visitor.age = rb.age,
+                Visitor.email = rb.email,
+                Visitor.phone_number = rb.phone_number,
+                Visitor.photo_url = rb.photo_url,
+                Visitor.photo_description = rb.photo_description
+            WHERE Visitor.visitor_id = NEW.seller_id;
+        END IF;
+
+        /*Καταγραφή στο log*/
+        INSERT INTO Resale_Log (ticket_id, old_owner_id, new_owner_id, sale_price)
+        VALUES (
+            NEW.ticket_id,
+            NEW.seller_id,
+            IF(ticket_count > 1, new_visitor_id, v_buyer_id),
+            NEW.price
+        );
+
+        /*Σβήσε τις εγγραφές από queues*/
+        UPDATE Demand_Queue SET status = TRUE WHERE demand_id = v_demand_id;
+        DELETE FROM Resale_Buyer WHERE buyer_id = v_buyer_id;
+    END IF;
+
+END;
+
+//
+
 DELIMITER ;
 
 /* Both look to work */

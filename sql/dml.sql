@@ -16,7 +16,7 @@
     TRUNCATE TABLE Ticket;
     TRUNCATE TABLE Resale_Buyer;
     TRUNCATE TABLE Resale_Queue;
-
+    TRUNCATE TABLE Demand_Queue;
     -- Reenable foreign key checks
     SET foreign_key_checks = 1;
 
@@ -66,9 +66,9 @@
     /*Populate Stage Table (testing for question 2)*/
     INSERT INTO Stage (name, description, max_capacity, infos_technical_equipment, photo_url, photo_description)
     VALUES
-    ('Main Stage', 'Biggest stage of the fest', 5000, 'Lights, sound system, pyrotechnics', 'http://dummyimage.com/400x100.png', 'desc'),
-    ('Electric Grove', 'High-tech stage with panoramic LED screens.', 7302, 'Lights, lasers, subwoofers', 'http://dummyimage.com/206x100.png', 'Electric Grove setup with lights, lasers, subwoofers.'),
-    ('Sunset Arena', 'Open air venue with stunning sunset views.', 5977, 'Surround sound, moving head lights', 'http://dummyimage.com/172x100.png', 'Sunset Arena setup with surround sound, moving head lights.'),
+    ('Main Stage', 'Biggest stage of the fest', 11, 'Lights, sound system, pyrotechnics', 'http://dummyimage.com/400x100.png', 'desc'),
+    ('Electric Grove', 'High-tech stage with panoramic LED screens.', 10, 'Lights, lasers, subwoofers', 'http://dummyimage.com/206x100.png', 'Electric Grove setup with lights, lasers, subwoofers.'),
+    ('Sunset Arena', 'Open air venue with stunning sunset views.', 9, 'Surround sound, moving head lights', 'http://dummyimage.com/172x100.png', 'Sunset Arena setup with surround sound, moving head lights.'),
     ('Bassline Bay', 'Perfect for bass-heavy performances.', 6001, 'Basic setup with speakers and mics', 'http://dummyimage.com/169x100.png', 'Bassline Bay setup with basic setup with speakers and mics.'),
     ('Harmony Hill', 'Located on a hillside with great acoustics.', 6891, 'LED wall, fog machines, DJ booth', 'http://dummyimage.com/156x100.png', 'Harmony Hill setup with led wall, fog machines, dj booth.'),
     ('Echo Grounds', 'Circular stage surrounded by echo walls.', 2425, 'Dual projection, rotating stage', 'http://dummyimage.com/228x100.png', 'Echo Grounds setup with dual projection, rotating stage.'),
@@ -433,14 +433,63 @@
     (199, 19, 19, 2, '2025-05-19', 196.82, 3, '1000000000199', TRUE, NULL, NULL),
     (200, 35, 23, 3, '2025-06-03', 188.83, 2, '1000000000200', TRUE, NULL, NULL),
     (201, 38, 4, 3, '2025-05-27', 108.22, 2, '1000000000201', TRUE, NULL, NULL),
-    (202, 3, 28, 1, '2025-05-21', 120.26, 3, '1000000000202', FALSE, NULL, NULL);
+    (202, 3, 28, 2, '2025-05-21', 120.26, 3, '1000000000202', FALSE, NULL, NULL),
+    (203, 1, 11, 3, '2025-05-07', 194.58, 3, '10000000002203', FALSE, NULL, NULL),
+    (204, 1, 18, 3, '2025-05-10', 116.75, 3, '10000000002204', FALSE, NULL, NULL),
+    (205, 1, 26, 2, '2025-05-11', 136.35, 2, '10000000002205', FALSE, NULL, NULL),
+    (206, 1, 6, 3, '2025-05-27', 78.01, 3, '10000000002206', FALSE, NULL, NULL),
+    (207, 1, 22, 2, '2025-05-16', 60.36, 3, '10000000002207', FALSE, NULL, NULL),
+    (208, 1, 25, 2, '2025-05-29', 72.43, 1, '10000000002208', FALSE, NULL, NULL),
+
+    (209, 2, 27, 2, '2025-05-29', 154.90, 3, '10000000002209', FALSE, NULL, NULL),
+    (210, 2, 22, 2, '2025-05-27', 155.79, 2, '10000000002210', FALSE, NULL, NULL),
+    (211, 2, 17, 3, '2025-05-28', 82.28, 3, '10000000002211', FALSE, NULL, NULL),
+    (212, 2, 19, 2, '2025-05-19', 91.28, 2, '10000000002212', FALSE, NULL, NULL),
+    (213, 2, 22, 3, '2025-05-23', 187.54, 2, '10000000002213', FALSE, NULL, NULL),
+    (214, 2, 3, 2, '2025-05-20', 67.30, 3, '10000000002214', FALSE, NULL, NULL),
+    (215, 2, 21, 2, '2025-05-28', 78.56, 1, '10000000002215', FALSE, NULL, NULL),
+
+    (216, 33, 24, 2, '2025-05-04', 155.80, 2, '10000000002216', FALSE, NULL, NULL),
+    (217, 33, 26, 3, '2025-05-11', 113.92, 1, '10000000002217', FALSE, NULL, NULL),
+    (218, 33, 4, 2, '2025-05-28', 154.65, 1, '10000000002218', FALSE, NULL, NULL),
+    (219, 33, 27, 3, '2025-05-21', 186.50, 3, '10000000002219', FALSE, NULL, NULL),
+    (220, 33, 20, 3, '2025-05-03', 54.00, 3, '10000000002220', FALSE, NULL, NULL);
 
 
-    INSERT INTO Resale_Buyer (buyer_id, name, surname, age, email, phone_number, photo_url, photo_description)
-    VALUES (1, 'Alexandra', 'Papadopoulou', 28, 'alexandra.p@example.com', '+306912345678', 'http://dummyimage.com/200x100.png/5fa2dd/ffffff', 'Profile photo of Alexandra at a concert.');
 
+    INSERT INTO Resale_Buyer (buyer_id, name, surname, age, email, phone_number, photo_url, photo_description) 
+    VALUES
+    (1, 'Alexandra', 'Papadopoulou', 28, 'alexandra.p@example.com', '+306912345678', 'http://dummyimage.com/200x100.png/5fa2dd/ffffff', 'Profile photo of Alexandra at a concert.'),    
+    (2, 'George', 'Andreadis', 34, 'george.andreadis@example.com', '+306911234567', 'http://dummyimage.com/200x100.png/ff4444/ffffff', 'George enjoying live rock music.'),
+    (3, 'Maria', 'Ioannou', 29, 'maria.ioannou@example.com', '+306912345679', 'http://dummyimage.com/200x100.png/007bff/ffffff', 'Maria posing with stage lights.'),
+    (4, 'Kostas', 'Papanikolaou', 45, 'kostas.p@example.com', '+306913456780', 'http://dummyimage.com/200x100.png/5fa2dd/ffffff', 'Kostas at an acoustic set.'),
+    (5, 'Eleni', 'Karagianni', 22, 'eleni.k@example.com', '+306914567891', 'http://dummyimage.com/200x100.png/28a745/ffffff', 'Eleni dancing at the main stage.'),
+    (6, 'Nikos', 'Mitsotakis', 38, 'nikos.m@example.com', '+306915678902', 'http://dummyimage.com/200x100.png/6f42c1/ffffff', 'Nikos at an indie concert.'),
+    (7, 'Dimitra', 'Panagiotopoulou', 31, 'dimitra.p@example.com', '+306916789013', 'http://dummyimage.com/200x100.png/ffc107/000000', 'Dimitra and friends vibing.'),
+    (8, 'Michalis', 'Alexiou', 27, 'michalis.a@example.com', '+306917890124', 'http://dummyimage.com/200x100.png/cc0000/ffffff', 'Michalis with festival wristbands.'),
+    (9, 'Anna', 'Georgiou', 24, 'anna.g@example.com', '+306918901235', 'http://dummyimage.com/200x100.png/dddddd/000000', 'Anna with face paint at a rave.'),
+    (10, 'Spyros', 'Koutras', 40, 'spyros.k@example.com', '+306919012346', 'http://dummyimage.com/200x100.png/007bff/ffffff', 'Spyros enjoying electronic night.'),
+    (11, 'Vasiliki', 'Douka', 36, 'vasiliki.d@example.com', '+306920123457', 'http://dummyimage.com/200x100.png/5fa2dd/ffffff', 'Vasiliki near the food trucks.'),
+    (12, 'Giannis', 'Kouris', 33, 'giannis.k@example.com', '+306921234568', 'http://dummyimage.com/200x100.png/28a745/ffffff', 'Giannis attending with his band.'),
+    (13, 'Stella', 'Makri', 30, 'stella.m@example.com', '+306922345679', 'http://dummyimage.com/200x100.png/6f42c1/ffffff', 'Stella at the front row.'),
+    (14, 'Christos', 'Zervos', 35, 'christos.z@example.com', '+306923456780', 'http://dummyimage.com/200x100.png/ffc107/000000', 'Christos with LED bracelets.'),
+    (15, 'Georgia', 'Lambrou', 26, 'georgia.l@example.com', '+306924567891', 'http://dummyimage.com/200x100.png/cc0000/ffffff', 'Georgia under the fireworks.'),
+    (16, 'Apostolos', 'Venieris', 29, 'apostolos.v@example.com', '+306925678902', 'http://dummyimage.com/200x100.png/dddddd/000000', 'Apostolos taking selfies at the dome.');
 
     INSERT INTO Resale_Queue (resale_id, ticket_id, seller_id, listing_date, price, status) 
-    VALUES (1, 1, 1, '2025-04-01', 120.00,FALSE);
+    VALUES 
+    (1, 2, 1, CURDATE(), 130.00, FALSE),
+    (2, 123, 30, CURDATE(), 63.31, FALSE),
+    (3, 203, 11, CURDATE(), 194.58, FALSE),
+    (4, 10, 5, CURDATE(), 51.05, FALSE);
+
+    INSERT INTO Demand_Queue (demand_id, buyer_id, preferred_ticket_type, preferred_event_id, request_date, status)
+    VALUES
+    (1, 1, 1, 1, '2025-04-01', FALSE),
+    (2, 2, 3, 1, '2025-04-02', FALSE),
+    (3, 3, 3, 1, '2025-04-03', FALSE),
+    (4, 4, 1, 2, '2025-04-04', FALSE);
+    
+
 
     /*TODO: Correct the queries and the queue of insertion of them*/

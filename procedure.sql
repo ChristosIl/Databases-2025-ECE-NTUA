@@ -12,6 +12,8 @@
 -- Parameters:
 --     IN in_buyer_id     INT     → The buyer's ID (from Resale_Buyer table).
 --     IN in_resale_id    INT     → The resale entry ID (from Resale_Queue table).
+
+--      CALL buy_specific_ticket(<buyer_id>, <resale_id>);
 -- ============================================================================
 
 DELIMITER $$
@@ -24,7 +26,8 @@ BEGIN
 
     DECLARE ticket_id_var INT;
     DECLARE current_visitor_id INT;
-
+    DECLARE ticket_count INT;
+    DECLARE new_visitor_id INT;
 /*Find ticket id from resale queue*/
 SELECT ticket_id
 INTO ticket_id_var
@@ -37,18 +40,40 @@ INTO current_visitor_id
 FROM Ticket    
 WHERE ticket_id = ticket_id_var;
 
-/*Set the buyer's values to visitor's values (change buyer with visitor)*/
-UPDATE Visitor
-SET
-name = (SELECT name FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-surname = (SELECT surname FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-age = (SELECT age FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-email = (SELECT email FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-phone_number = (SELECT phone_number FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-photo_url = (SELECT photo_url FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
-photo_description = (SELECT photo_description FROM Resale_Buyer WHERE buyer_id = in_buyer_id)
+/*Count how many tickets the seller owns*/
+SELECT COUNT(*) INTO ticket_count
+FROM Ticket
 WHERE visitor_id = current_visitor_id;
 
+IF ticket_count > 1 THEN
+    /*Create new visitor*/
+    
+    INSERT INTO Visitor (name, surname, age, email, phone_number, photo_url, photo_description)
+    SELECT name, surname, age, email, phone_number, photo_url, photo_description
+    FROM Resale_Buyer
+    WHERE buyer_id = in_buyer_id;
+
+    SET new_visitor_id = LAST_INSERT_ID();
+
+    UPDATE Ticket
+    SET visitor_id = new_visitor_id
+    WHERE ticket_id = ticket_id_var;
+
+ELSE
+    /*Set the buyer's values to visitor's values (change buyer with visitor)*/
+    UPDATE Visitor
+    SET
+    name = (SELECT name FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    surname = (SELECT surname FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    age = (SELECT age FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    email = (SELECT email FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    phone_number = (SELECT phone_number FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    photo_url = (SELECT photo_url FROM Resale_Buyer WHERE buyer_id = in_buyer_id),
+    photo_description = (SELECT photo_description FROM Resale_Buyer WHERE buyer_id = in_buyer_id)
+    WHERE visitor_id = current_visitor_id;
+END IF;
+
+/*Logging the transaction*/
 INSERT INTO Buys_specific_ticket(buyer_id, resale_id, interest_date, status)
 VALUES 
 (in_buyer_id, in_resale_id, NOW(), 'completed');
@@ -56,7 +81,8 @@ VALUES
 /*Delete the item from the resale queue*/
 DELETE FROM Resale_Queue
 WHERE resale_id = in_resale_id;
-
+DELETE FROM Resale_Buyer
+WHERE buyer_id = in_buyer_id;
 
 
 END$$
