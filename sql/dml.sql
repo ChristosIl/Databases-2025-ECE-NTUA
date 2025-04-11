@@ -10,7 +10,10 @@
     TRUNCATE TABLE Location;
     TRUNCATE TABLE Festival;
     TRUNCATE TABLE Event;
-    TRUNCATE TABLE Performer;
+    TRUNCATE TABLE Artist;
+    TRUNCATE TABLE Band;
+    TRUNCATE TABLE Belongs_to;
+    TRUNCATE TABLE Performs;
     TRUNCATE TABLE Performance;
     TRUNCATE TABLE Visitor;
     TRUNCATE TABLE Ticket;
@@ -180,16 +183,116 @@
 
 
     /*Populate Performance Table (testing for question 2)*/
-    INSERT INTO Performer (performer_id, name, nickname, birth_date, is_solo, music_genres, sub_music_genres, website, instagram, photo_url, photo_description)
+   INSERT INTO Artist (artist_id, name, nickname, birth_date, is_solo, music_genres, sub_music_genres, website, instagram, photo_url, photo_description) 
+   VALUES
+    (1, 'Steven Rodriguez', 'Michael', '2004-03-07', FALSE, 'Jazz', 'Indie', 'http://www.wang.com/', 'https://instagram.com/fowen', 'https://placekitten.com/990/994', 'Under join professor including bill.'),
+    (2, 'Rachel Smith', 'Dakota', '1968-01-19', FALSE, 'Jazz', 'Classical Fusion', 'https://www.murillo.biz/', 'https://instagram.com/benjamintaylor', 'https://dummyimage.com/770x298', 'Baby camera bed live organization during across.'),
+    (3, 'Michael Evans', 'George', '1982-06-19', FALSE, 'Hip Hop', 'Trap', 'https://lopez-walker.net/', 'https://instagram.com/ramirezadam', 'https://placeimg.com/508/66/any', 'Carry argue help education body.'),
+    (4, 'Angel Williams', 'Stephen', '2000-08-13', FALSE, 'Electronic', 'Trap', 'https://chase.com/', 'https://instagram.com/thompsonlee', 'https://placekitten.com/214/858', 'Citizen customer wind father writer.'),
+    (5, 'Richard Gonzales', 'Tracey', '1994-09-01', FALSE, 'Jazz', 'Classical Fusion', 'http://www.campbell.org/', 'https://instagram.com/wendy89', 'https://dummyimage.com/147x947', 'Country drop hundred fear professional military issue.'),
+    (6, 'Hannah Reynolds', 'Terrance', '1983-06-09', FALSE, 'Electronic', 'Indie', 'https://www.rodriguez.com/', 'https://instagram.com/kellymoore', 'https://placeimg.com/368/961/any', 'Admit win open appear.'),
+    (7, 'Erik Valentine', 'Kevin', '2003-11-13', FALSE, 'Electronic', 'Funk', 'http://www.joseph-martinez.com/', 'https://instagram.com/amymedina', 'https://dummyimage.com/183x172', 'Season kind sign street five player.'),
+    (8, 'Alexandra Willis', 'Emily', '1982-03-10', FALSE, 'Rock', 'Classical Fusion', 'https://www.torres.com/', 'https://instagram.com/sara49', 'https://placeimg.com/540/122/any', 'Available lose foreign challenge media spring.'),
+    (9, 'Jennifer Medina', 'Jesse', '1976-02-26', FALSE, 'Rock', 'Funk', 'http://miller-owens.com/', 'https://instagram.com/wmay', 'https://dummyimage.com/88x175', 'Tend official company share indicate.'),
+    (10, 'Isaac Phillips', 'Christopher', '2003-12-31', FALSE, 'Rock', 'Funk', 'http://davis.com/', 'https://instagram.com/angela04', 'https://placeimg.com/327/837/any', 'Base should form opportunity.'),
+    (11, 'Joseph Velazquez', 'Joshua', '1995-04-18', FALSE, 'Hip Hop', 'Trap', 'http://schmitt.com/', 'https://instagram.com/gregory06', 'https://placeimg.com/706/388/any', 'Alone each in ask.'),
+    (12, 'William Garner', 'Melanie', '1974-06-09', FALSE, 'Pop', 'Classical Fusion', 'https://www.petty.com/', 'https://instagram.com/vfarrell', 'https://dummyimage.com/77x697', 'Officer public indicate kind much plant.'),
+    (13, 'Mark Martinez', 'Raymond', '1990-03-18', FALSE, 'Electronic', 'Classical Fusion', 'http://miller-rodriguez.com/', 'https://instagram.com/jennifer10', 'https://dummyimage.com/356x788', 'Industry price respond north.'),
+    (14, 'Patrick Hatfield', 'Leah', '1998-08-19', FALSE, 'Hip Hop', 'Funk', 'http://www.harper.com/', 'https://instagram.com/elizabethzuniga', 'https://dummyimage.com/347x761', 'Owner suddenly suggest commercial.'),
+    (15, 'Lisa Martin', 'Brian', '1967-10-16', FALSE, 'Jazz', 'Trap', 'https://smith.biz/', 'https://instagram.com/bakercrystal', 'https://placeimg.com/547/709/any', 'Drop sell bag approach their.'),
+    (16, 'Roger Hernandez', 'Nicholas', '1972-01-29', FALSE, 'Jazz', 'Funk', 'http://ramirez-ashley.org/', 'https://instagram.com/ymcconnell', 'https://dummyimage.com/846x806', 'Congress machine agent west might wait option.'),
+    (17, 'Jennifer Martinez', 'Blake', '1988-06-01', FALSE, 'Hip Hop', 'Classical Fusion', 'https://tanner.com/', 'https://instagram.com/jesse39', 'https://www.lorempixel.com/234/849', 'Whatever left not describe.'),
+    (18, 'Lori Carr', 'Ashley', '1985-08-16', FALSE, 'Jazz', 'Indie', 'http://www.rodriguez.com/', 'https://instagram.com/tfox', 'https://placeimg.com/116/436/any', 'Stock be senior matter century.'),
+    (19, 'Brittney Wright', 'Christopher', '1976-10-23', FALSE, 'Jazz', 'Trap', 'http://www.bennett-rodriguez.com/', 'https://instagram.com/bowmanamanda', 'https://placekitten.com/317/295', 'Successful note loss beat lose voice.'),
+    (20, 'Charles Smith', 'Kenneth', '1987-09-20', FALSE, 'Pop', 'Synthwave', 'https://woods.com/', 'https://instagram.com/bmaxwell', 'https://www.lorempixel.com/818/883', 'Never health generation.'),
+    (21, 'Lisa Lam', 'Derek', '1985-02-07', FALSE, 'Jazz', 'Synthwave', 'http://bell.com/', 'https://instagram.com/gibsonjennifer', 'https://dummyimage.com/586x884', 'Thus close fight style happen.'),
+    (22, 'Barbara Meyer', 'Christopher', '1994-12-27', FALSE, 'Electronic', 'Indie', 'https://www.woodard-stuart.com/', 'https://instagram.com/bmiles', 'https://placekitten.com/295/451', 'Heavy price popular college turn evidence.'),
+    (23, 'Gail Sutton', 'Jose', '1982-02-16', FALSE, 'Rock', 'Trap', 'http://www.white.biz/', 'https://instagram.com/julianbarrett', 'https://placekitten.com/958/717', 'Activity character number sort agent.'),
+    (24, 'Joseph Weaver', 'Robert', '1984-04-30', FALSE, 'Hip Hop', 'Classical Fusion', 'https://barnes.com/', 'https://instagram.com/vdavis', 'https://dummyimage.com/34x500', 'Nothing control best degree look.'),
+    (25, 'Ruben Williams', 'Stephanie', '2006-11-30', FALSE, 'Hip Hop', 'Funk', 'http://english.net/', 'https://instagram.com/stephaniethompson', 'https://dummyimage.com/749x491', 'Hot radio avoid standard far easy most.'),
+    (26, 'Timothy Holloway', 'Elizabeth', '1996-10-24', FALSE, 'Rock', 'Indie', 'http://mcdonald.com/', 'https://instagram.com/marie26', 'https://placeimg.com/852/933/any', 'Good determine see religious source standard who marriage.'),
+    (27, 'Amanda Dennis', 'David', '1971-01-11', FALSE, 'Pop', 'Funk', 'https://osborn.com/', 'https://instagram.com/jbass', 'https://placekitten.com/42/737', 'Serious work bed.'),
+    (28, 'David Campos', 'Justin', '1985-01-10', FALSE, 'Jazz', 'Classical Fusion', 'http://www.miller.com/', 'https://instagram.com/bvasquez', 'https://www.lorempixel.com/437/722', 'Religious production Republican debate cost loss.'),
+    (29, 'Alicia Cameron MD', 'Matthew', '1971-11-30', FALSE, 'Hip Hop', 'Classical Fusion', 'http://peterson.com/', 'https://instagram.com/nguyenbradley', 'https://placekitten.com/892/342', 'Staff tough fill choice.'),
+    (30, 'Mrs. Mariah Dawson DDS', 'Eric', '1992-07-21', FALSE, 'Hip Hop', 'Classical Fusion', 'https://gibson.biz/', 'https://instagram.com/stephen54', 'https://placeimg.com/368/843/any', 'Also my upon however claim message answer.'),
+    (31, 'Larry Foster', 'Tiffany', '1991-09-16', TRUE, 'Jazz', 'Funk', 'https://www.donaldson.com/', 'https://instagram.com/glenn32', 'https://www.lorempixel.com/701/1004', 'Policy national figure black technology at.'),
+    (32, 'Harry Schroeder', 'Karen', '1996-06-10', TRUE, 'Jazz', 'Synthwave', 'https://hester-santana.com/', 'https://instagram.com/tjohnson', 'https://www.lorempixel.com/544/648', 'Three manager answer political price.'),
+    (33, 'William Gay MD', 'Sherry', '2005-09-03', TRUE, 'Rock', 'Trap', 'https://stewart.com/', 'https://instagram.com/carlygardner', 'https://placeimg.com/381/373/any', 'Catch quality peace plan into person third.'),
+    (34, 'Gabriel Powers', 'Joshua', '2004-12-27', TRUE, 'Rock', 'Classical Fusion', 'http://www.edwards.info/', 'https://instagram.com/bryanalvarez', 'https://dummyimage.com/854x367', 'Scientist tough deep thus full between.'),
+    (35, 'Wesley Pope', 'Carolyn', '1974-06-19', TRUE, 'Pop', 'Trap', 'http://king.net/', 'https://instagram.com/johnjohnson', 'https://placeimg.com/885/872/any', 'In poor most financial yourself TV analysis minute.'),
+    (36, 'Christopher Hurst', 'Amanda', '1996-04-23', TRUE, 'Jazz', 'Classical Fusion', 'https://turner.com/', 'https://instagram.com/michaeldavis', 'https://dummyimage.com/37x591', 'Positive outside research ok child paper.'),
+    (37, 'Nicole Lopez', 'Dawn', '1964-07-27', TRUE, 'Rock', 'Trap', 'http://www.murray-rivera.com/', 'https://instagram.com/swilliams', 'https://dummyimage.com/252x443', 'Plant share there law front.'),
+    (38, 'Bruce Scott', 'Mallory', '1987-08-05', TRUE, 'Pop', 'Synthwave', 'http://www.barrett.com/', 'https://instagram.com/kwilliams', 'https://placeimg.com/363/121/any', 'Notice ago degree knowledge.'),
+    (39, 'Catherine Taylor', 'Maria', '1988-10-11', TRUE, 'Jazz', 'Indie', 'https://www.reed.com/', 'https://instagram.com/michael61', 'https://dummyimage.com/627x332', 'Activity when home yes population.'),
+    (40, 'Timothy Edwards', 'Lisa', '1975-08-17', TRUE, 'Jazz', 'Indie', 'http://parks-thornton.biz/', 'https://instagram.com/odonnellmadeline', 'https://www.lorempixel.com/86/847', 'Treat describe information she management get.'),
+    (41, 'Kimberly Calderon', 'Elizabeth', '1980-04-10', TRUE, 'Electronic', 'Synthwave', 'http://jensen-green.org/', 'https://instagram.com/joshua55', 'https://dummyimage.com/788x439', 'School she heavy listen pattern behind try.'),
+    (42, 'Julie Jenkins', 'Shannon', '1989-12-25', TRUE, 'Hip Hop', 'Indie', 'http://www.adams.com/', 'https://instagram.com/jamesfreeman', 'https://placekitten.com/668/121', 'Blue end event enjoy fact risk marriage idea.'),
+    (43, 'Mrs. Angela Hunter', 'Misty', '1978-07-25', TRUE, 'Electronic', 'Synthwave', 'https://torres-sparks.com/', 'https://instagram.com/vhubbard', 'https://placeimg.com/334/242/any', 'Way should because in nearly significant around.'),
+    (44, 'Deborah Patel', 'Monica', '1986-03-29', TRUE, 'Hip Hop', 'Funk', 'https://www.mills-dixon.com/', 'https://instagram.com/stuartjoshua', 'https://placekitten.com/616/255', 'Age money staff whatever and example.'),
+    (45, 'Troy Smith', 'Natalie', '2001-04-19', TRUE, 'Pop', 'Indie', 'https://www.williams.net/', 'https://instagram.com/igalloway', 'https://placekitten.com/111/449', 'Employee a reach stuff head environment water interest.'),
+    (46, 'Sean Lewis', 'Steven', '1983-07-26', TRUE, 'Hip Hop', 'Indie', 'https://www.jensen.com/', 'https://instagram.com/hawkinskatrina', 'https://dummyimage.com/488x793', 'Sure similar mention concern.'),
+    (47, 'Joseph Petty', 'Raymond', '1975-10-01', TRUE, 'Hip Hop', 'Funk', 'http://lopez-cox.com/', 'https://instagram.com/acevedosteven', 'https://placeimg.com/645/31/any', 'Spring move open blood explain such company.'),
+    (48, 'Jennifer Warren', 'Christine', '1984-07-10', TRUE, 'Electronic', 'Indie', 'https://www.schneider-fisher.net/', 'https://instagram.com/davidbrown', 'https://www.lorempixel.com/880/611', 'Seem special course out yard strong skin.'),
+    (49, 'Mary Young', 'Steven', '2002-05-04', TRUE, 'Pop', 'Classical Fusion', 'http://hill.com/', 'https://instagram.com/alvaradomadison', 'https://dummyimage.com/523x542', 'Somebody hour service executive material item second miss.'),
+    (50, 'Michael Bass', 'Mary', '1973-06-27', TRUE, 'Rock', 'Trap', 'https://www.stephenson-rivera.org/', 'https://instagram.com/brooksolivia', 'https://placekitten.com/231/729', 'Expect activity hit international hotel develop mother.');
+
+
+    /*Populate Band Table*/
+    INSERT INTO Band (band_id, name, formation_date, member_list, instagram, website, photo_url, photo_description) 
     VALUES
-    (1, 'The Rockers', NULL, '1990-01-01', FALSE, 'Rock', 'Hard Rock', NULL, NULL, 'url', 'desc'),
-    (2, 'Smooth Jazz Band', NULL, '1995-05-20', FALSE, 'Jazz', 'Smooth Jazz', NULL, NULL, 'url', 'desc'),
-    (3, 'Electro Beat', NULL, '1992-03-10', TRUE, 'Electronic', 'Synthpop', NULL, NULL, 'url', 'desc'),
-    (4, 'Another Rocker', NULL, '1994-09-15', TRUE, 'Rock', 'Alternative Rock', NULL, NULL, 'url', 'desc');
+    (1, 'Erickson LLC', '2023-12-08', 'Alexander Mckay, Thomas Brown, Emily Price', 'https://instagram.com/mclark', 'https://www.frederick-miller.com/', 'https://placekitten.com/222/557', 'Pass subject woman admit early prepare community.'),
+    (2, 'Williams, Rodriguez and Christensen', '2005-08-31', 'Kimberly Lawson DDS, Alicia Wilson, Jill Byrd, Lisa Smith, Jamie Smith, Cheryl Frank', 'https://instagram.com/aking', 'http://thompson.net/', 'https://www.lorempixel.com/182/354', 'Miss accept change son.'),
+    (3, 'Tucker-Jackson', '2011-11-18', 'Jessica Thompson, Nathan Dickerson, Mrs. Brenda Davis, Melvin Kim', 'https://instagram.com/qjimenez', 'http://www.jimenez.com/', 'https://dummyimage.com/479x452', 'None join language.'),
+    (4, 'Harris-Rivera', '1999-05-06', 'Robert Ward, Jennifer Green, Tamara Brown, Don Moore, Tracy Thomas, Lisa Arnold', 'https://instagram.com/gabriel20', 'https://martinez.net/', 'https://placeimg.com/108/21/any', 'Turn arm here trial while teach.'),
+    (5, 'Beck, Lewis and Kaiser', '1998-05-11', 'Donald Hayes, Patrick Taylor, Johnny Hoover, Brian Green, Anthony Leon, Wesley Robinson', 'https://instagram.com/brenthill', 'http://www.morgan.info/', 'https://placeimg.com/420/794/any', 'Wide pattern street by here cultural firm.'),
+    (6, 'Rodriguez Inc', '1999-05-04', 'Mr. Chad Powell, Amanda Simpson, Nicole Schwartz, Melissa Rhodes, Melissa Morrow, Garrett Gentry', 'https://instagram.com/johnsontiffany', 'https://www.norman.com/', 'https://placekitten.com/874/902', 'Fall pressure various great agree.'),
+    (7, 'Garrett, Allen and Todd', '2003-03-30', 'Randy Rodgers, Heather Garcia, Amanda Howard, Daniel Wilkins, Steven Gibson', 'https://instagram.com/davidbooker', 'https://harris-diaz.com/', 'https://placekitten.com/88/237', 'Analysis officer financial week enter.'),
+    (8, 'Jackson LLC', '2001-08-27', 'Robert Blackwell, Dawn Ryan, Todd Schmidt, Rebecca Parsons, Angela Snyder, Angela Simmons', 'https://instagram.com/ztyler', 'http://www.trevino.net/', 'https://placeimg.com/112/4/any', 'Know friend senior action.'),
+    (9, 'Murphy, Buck and Cantrell', '2011-04-08', 'Dustin Hancock, Barbara Brown, Amy Park, Daniel Wilcox, Jasmine Henderson', 'https://instagram.com/sarahthornton', 'https://www.swanson.com/', 'https://placeimg.com/648/760/any', 'Probably answer speak use strong service pattern.'),
+    (10, 'Nelson and Sons', '2021-10-29', 'Amanda Hahn, Emily Sullivan, Jason Mosley', 'https://instagram.com/igonzales', 'http://fisher.com/', 'https://www.lorempixel.com/424/1014', 'Understand politics leader few cost catch.'),
+    (11, 'Rogers Inc', '2016-10-13', 'Nichole Beck, Randy Guzman, Natalie Richardson', 'https://instagram.com/kelly96', 'https://chandler-gould.com/', 'https://placeimg.com/275/372/any', 'He suddenly interest.'),
+    (12, 'Kirk PLC', '1999-02-02', 'Ryan Morris, Roberto Lewis, Jeffery Miller, Justin Mckenzie', 'https://instagram.com/helen31', 'http://www.willis.com/', 'https://placeimg.com/35/79/any', 'Down or civil white.'),
+    (13, 'Short-Mcgee', '2003-04-06', 'David Green, Barbara Martin, Deborah Rogers, Heather Allen', 'https://instagram.com/parkersean', 'https://gardner.com/', 'https://placekitten.com/517/835', 'Hit other day pay simply.'),
+    (14, 'Dawson and Sons', '2010-09-08', 'Amy Brown, Elizabeth Foster, Denise Stevenson, William Roberts, Gregory Martinez', 'https://instagram.com/williamcraig', 'https://www.brock-lopez.com/', 'https://dummyimage.com/488x733', 'However onto maybe raise to unit very.'),
+    (15, 'Fleming Group', '2015-07-07', 'Lisa Sullivan, Jorge Neal, Cathy Shaw', 'https://instagram.com/gomezstacy', 'https://www.lopez-austin.com/', 'https://dummyimage.com/824x364', 'Generation piece kind near us free.');
+    
+    /*Populate Belongs to Table*/
+    INSERT INTO Belongs_to (artist_id, band_id) 
+    VALUES
+    (1, 2),
+    (2, 3),
+    (3, 4),
+    (4, 5),
+    (5, 6),
+    (6, 7),
+    (7, 8),
+    (8, 9),
+    (9, 10),
+    (10, 11),
+    (11, 12),
+    (12, 13),
+    (13, 14),
+    (14, 15),
+    (15, 1),
+    (16, 2),
+    (17, 3),
+    (18, 4),
+    (19, 5),
+    (20, 6),
+    (21, 7),
+    (22, 8),
+    (23, 9),
+    (24, 10),
+    (25, 11),
+    (26, 12),
+    (27, 13),
+    (28, 14),
+    (29, 15),
+    (30, 1);
 
 
     /*Populate Performances Table (testing for question 2)*/
-    INSERT INTO Performance (performance_id, event_id, performer_id, type_of_performance, duration, start_time, end_time, photo_url, photo_description)
+    INSERT INTO Performance (performance_id, event_id, artist_id, type_of_performance, duration, start_time, end_time, photo_url, photo_description)
     VALUES
     (1, 1, 1, 'Headline', 2, 18.00, 20.00, 'url', 'desc'),
     (2, 1, 4, 'Warm Up', 1.5, 16.00, 17.30, 'url', 'desc');

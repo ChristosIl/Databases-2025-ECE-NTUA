@@ -9,8 +9,9 @@ DROP TABLE IF EXISTS Event;
 DROP TABLE IF EXISTS Staff_role;
 DROP TABLE IF EXISTS Experience_level;
 DROP TABLE IF EXISTS Staff;
-DROP TABLE IF EXISTS Performer;
+DROP TABLE IF EXISTS Artist;
 DROP TABLE IF EXISTS Band;
+DROP TABLE IF EXISTS Performs;
 DROP TABLE IF EXISTS Performance;
 DROP TABLE IF EXISTS Payment_method;
 DROP TABLE IF EXISTS Visitor;
@@ -114,9 +115,9 @@ CREATE TABLE IF NOT EXISTS Staff (
     FOREIGN KEY (experience_id) REFERENCES Experience_level(experience_id)
 );
 
--- Performer Table
-CREATE TABLE IF NOT EXISTS Performer (
-    performer_id INT NOT NULL PRIMARY KEY,
+-- Artist Table
+CREATE TABLE IF NOT EXISTS Artist (
+    artist_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     nickname VARCHAR(255),
     birth_date DATE NOT NULL,
@@ -141,11 +142,28 @@ CREATE TABLE IF NOT EXISTS Band (
     photo_description TEXT
 );
 
+-- Performs Table
+CREATE TABLE IF NOT EXISTS Performs (
+    performs_id INT NOT NULL,
+    artist_id INT,
+    band_id INT,
+    performance_id INT,
+
+    FOREIGN KEY (performer_id) REFERENCES Performer(performer_id),
+    FOREIGN KEY (band_id) REFERENCES Band(band_id),
+    FOREIGN KEY (performance_id) REFERENCES Performance(performance_id)
+
+    CONSTRAINT chk_only_one_entity_of_performer
+    CHECK(
+        (artist_id IS NOT NULL AND band_id IS NULL) OR (artist_id IS NULL AND band_id IS NOT NULL) 
+    )
+);
+
 -- Performance Table
 CREATE TABLE IF NOT EXISTS Performance (
     performance_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
-    performer_id INT NOT NULL,
+    performs_id INT NOT NULL,
     type_of_performance VARCHAR(255) NOT NULL,
     duration FLOAT NOT NULL, 
     start_time FLOAT NOT NULL,
@@ -153,8 +171,11 @@ CREATE TABLE IF NOT EXISTS Performance (
     photo_url TEXT,
     photo_description TEXT,
 
+    CONSTRAINT duration_of_performance
+        CHECK (duration <= 3.0),
+
     FOREIGN KEY(event_id) REFERENCES Event(event_id),
-    FOREIGN KEY(performer_id) REFERENCES Performer(performer_id) 
+    FOREIGN KEY(performs_id) REFERENCES Performs(performs_id) 
 );
 
 -- Visitor Table
@@ -297,11 +318,11 @@ CREATE TABLE IF NOT EXISTS Buys_specific_ticket(
 
 -- Belongs to Table 
 CREATE TABLE IF NOT EXISTS Belongs_to (
-    performer_id INT NOT NULL,
+    artist_id INT NOT NULL,
     band_id INT NOT NULL,
 
-    PRIMARY KEY (performer_id, band_id),
-    FOREIGN KEY (performer_id) REFERENCES Performer(performer_id),
+    PRIMARY KEY (artist_id, band_id),
+    FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
     FOREIGN KEY (band_id) REFERENCES Band(band_id)
 );
 
@@ -315,4 +336,4 @@ CREATE TABLE Resale_Log (
 );
 
 -- Creating Indexes after all tables are created
-CREATE INDEX idx_performer_nickname ON Performer(nickname);
+CREATE INDEX idx_performer_nickname ON Artist(nickname);
