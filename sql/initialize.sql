@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS Demand_queue;
 DROP TABLE IF EXISTS Buys_specific_ticket;
 DROP TABLE IF EXISTS Belongs_to;
 DROP TABLE IF EXISTS Resale_Log;
-
+DROP TABLE IF EXISTS Music_genres;
+DROP TABLE IF EXISTS Sub_music_genres;
 -- Enables again foreign keys
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -115,6 +116,20 @@ CREATE TABLE IF NOT EXISTS Staff (
     FOREIGN KEY (experience_id) REFERENCES Experience_level(experience_id)
 );
 
+-- Music genre Lookup Table -- 
+CREATE TABLE IF NOT EXISTS Music_genres(
+    music_genre_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- Sub music genre Lookup Table --
+CREATE TABLE IF NOT EXISTS Sub_music_genres(
+    sub_music_genre_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    music_genre_id INT,
+
+    FOREIGN KEY (music_genre_id) REFERENCES Music_genres(music_genre_id)
+);
 -- Artist Table
 CREATE TABLE IF NOT EXISTS Artist (
     artist_id INT NOT NULL PRIMARY KEY,
@@ -122,12 +137,29 @@ CREATE TABLE IF NOT EXISTS Artist (
     nickname VARCHAR(255),
     birth_date DATE NOT NULL,
     is_solo BOOLEAN NOT NULL,
-    music_genres VARCHAR(255) NOT NULL,
-    sub_music_genres VARCHAR(255) NOT NULL,
     website VARCHAR(255),
     instagram VARCHAR(255),
     photo_url TEXT NOT NULL, 
     photo_description TEXT NOT NULL
+
+);
+
+-- Artist Music genres many-to-many relationship Table --
+CREATE TABLE IF NOT EXISTS Artist_music_genres (
+    artist_id INT,
+    music_genre_id INT,
+    PRIMARY KEY (artist_id, music_genre_id),
+    FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
+    FOREIGN KEY (music_genre_id) REFERENCES Music_genres(music_genre_id)
+);
+
+-- Artist Sub Music genres many-to-many relationship Table --
+CREATE TABLE IF NOT EXISTS Artist_sub_music_genres (
+    artist_id INT,
+    sub_music_genre_id INT,
+    PRIMARY KEY (artist_id, sub_music_genre_id),
+    FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
+    FOREIGN KEY (sub_music_genre_id) REFERENCES Sub_music_genres(sub_music_genre_id)
 );
 
 -- Band Table
@@ -140,18 +172,19 @@ CREATE TABLE IF NOT EXISTS Band (
     website TEXT,
     photo_url TEXT,
     photo_description TEXT
+
 );
 
 -- Performs Table
 CREATE TABLE IF NOT EXISTS Performs (
-    performs_id INT NOT NULL,
+    performs_id INT NOT NULL PRIMARY KEY,
     artist_id INT,
     band_id INT,
-    performance_id INT,
+   /* performance_id INT,*/
 
-    FOREIGN KEY (performer_id) REFERENCES Performer(performer_id),
+    FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
     FOREIGN KEY (band_id) REFERENCES Band(band_id),
-    FOREIGN KEY (performance_id) REFERENCES Performance(performance_id)
+    /*FOREIGN KEY (performance_id) REFERENCES Performance(performance_id),*/
 
     CONSTRAINT chk_only_one_entity_of_performer
     CHECK(
