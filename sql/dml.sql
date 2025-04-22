@@ -531,14 +531,21 @@
     (1, 1, NULL),
     (2, 2, NULL),
     (3, NULL, 1),
-    (4, NULL, 2);
+    (4, NULL, 2),
+    (5, 1, NULL),
+    (6, 1, NULL),
+    (7, 1, NULL);
+
+    
 
     /*Populate Performances Table (testing for question 2)*/
     INSERT INTO Performance (performance_id, event_id, performs_id, type_of_performance, duration, start_time, end_time, photo_url, photo_description)
     VALUES
     (1, 1, 1, 'Headline', 2, 18.00, 20.00, 'url', 'desc'),
     (2, 1, 4, 'Warm Up', 1.5, 16.00, 17.30, 'url', 'desc');
-
+    (3, 2, 5, 'Warm Up', 1.0, 16.0, 17.0, 'url', 'desc'),
+    (4, 3, 6, 'Warm Up', 1.0, 15.0, 16.0, 'url', 'desc'),
+    (5, 1, 7, 'Warm Up', 1.5, 14.0, 15.5, 'url', 'desc');
 
     /*Populate visitor*/
     INSERT INTO Visitor (visitor_id, name, surname, age, email, phone_number, photo_url, photo_description)
