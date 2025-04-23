@@ -370,3 +370,43 @@ CREATE TABLE Resale_Log (
 
 -- Creating Indexes after all tables are created
 CREATE INDEX idx_performer_nickname ON Artist(nickname);
+
+
+
+-- View to check the population of assigned staff to every stage --
+CREATE OR REPLACE VIEW Stage_Staff_Coverage AS
+SELECT 
+    w.event_id,
+    w.stage_id,
+    stg.name AS stage_name,
+    stf.staff_role_id,
+    r.name AS role_name,
+    COUNT(*) AS assigned_staff,
+    stg.max_capacity,
+    CASE 
+        WHEN stf.staff_role_id = 2 THEN ROUND(stg.max_capacity * 0.05, 0)
+        WHEN stf.staff_role_id = 3 THEN ROUND(stg.max_capacity * 0.02, 0)
+        ELSE 0
+    END AS required_staff,
+    CASE 
+        WHEN stf.staff_role_id IN (2, 3) THEN 
+            CASE 
+                WHEN COUNT(*) >= 
+                    CASE 
+                        WHEN stf.staff_role_id = 2 THEN ROUND(stg.max_capacity * 0.05, 0)
+                        WHEN stf.staff_role_id = 3 THEN ROUND(stg.max_capacity * 0.02, 0)
+                    END 
+                THEN '✔ OK'
+                ELSE '✘ Understaffed'
+            END
+        ELSE 'N/A'
+    END AS status
+FROM Works_on w
+JOIN Stage stg ON w.stage_id = stg.stage_id
+JOIN Staff stf ON w.staff_id = stf.staff_id
+JOIN Staff_role r ON stf.staff_role_id = r.staff_role_id
+WHERE stf.staff_role_id IN (2, 3) -- Only security and support
+GROUP BY w.event_id, w.stage_id, stf.staff_role_id;
+
+
+

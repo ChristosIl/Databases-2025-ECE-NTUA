@@ -262,6 +262,30 @@ BEGIN
 END
 
 //
+
+CREATE TRIGGER check_staff_availability_trigger
+BEFORE INSERT ON Works_on
+FOR EACH ROW 
+BEGIN 
+    DECLARE conflict_events INT;
+
+    SELECT COUNT(*)
+    INTO conflict_events
+    FROM Works_on w
+    JOIN Event e1 ON w.event_id = e1.event_id
+    JOIN Event e2 ON e2.event_id = NEW.event_id
+    WHERE w.staff_id = NEW.staff_id
+      AND e1.event_date = e2.event_date
+      AND w.stage_id != NEW.stage_id;
+
+    IF conflict_events > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Staff member already assigned to a different stage on this date.';
+    END IF;
+END$$
+
+//
+
 DELIMITER ;
 
 /* All seem to work. Check the status in resale and demand queue tables */

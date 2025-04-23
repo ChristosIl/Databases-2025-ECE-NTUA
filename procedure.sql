@@ -87,4 +87,29 @@ WHERE buyer_id = in_buyer_id;
 
 END$$
 
+--============================================
+--Procedure to insert data into Works_On Table
+--
+--============================================
+DELIMITER $$
+
+CREATE PROCEDURE Insert_Staff_Assignment (
+    IN in_staff_id INT,
+    IN in_stage_id INT,
+    IN in_event_id INT
+)
+BEGIN
+    -- Check if assignment already exists
+    IF EXISTS (
+        SELECT 1 FROM Works_on
+        WHERE staff_id = in_staff_id AND stage_id = in_stage_id AND event_id = in_event_id
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Η ανάθεση υπάρχει ήδη.';
+    ELSE
+        INSERT INTO Works_on (staff_id, stage_id, event_id)
+        VALUES (in_staff_id, in_stage_id, in_event_id);
+    END IF;
+END $$
+
 DELIMITER ;
