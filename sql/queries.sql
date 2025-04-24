@@ -136,7 +136,20 @@ GROUP BY a.artist_id, a.name
 ORDER BY total_festival_participations DESC
 LIMIT 10;
 
---
+-- Query 7
+
+SELECT
+    f.festival_id, f.name AS FESTIVAL,
+    ROUND(avg(staff.experience_id), 2) AS AVG_working_experience_of_technicians
+FROM Festival f 
+JOIN Event e ON e.festival_id = f.festival_id
+JOIN Stage s ON e.stage_id = s.stage_id
+JOIN Works_on w ON w.stage_id = s.stage_id
+JOIN Staff staff ON staff.staff_id = w.staff_id 
+WHERE staff.staff_role_id = 1
+GROUP BY f.festival_id, f.name
+ORDER BY AVG_working_experience_of_technicians ASC
+LIMIT 1;
 
 -- Query 8 -- 
 -- We chose to present all the support staff and who are available the required date --
@@ -157,4 +170,32 @@ FROM Staff s
 WHERE s.staff_role_id = 3;
 
 
+-- Query 10  I think its done--
+SELECT 
+    DISTINCT(GROUP_CONCAT(mg.name ORDER BY mg.name SEPARATOR ', ')) AS Music_Genres
+    
+FROM Artist a 
+JOIN Artist_music_genres amg ON amg.artist_id = a.artist_id
+JOIN Music_genres mg ON mg.music_genre_id = amg.music_genre_id
+GROUP BY a.artist_id, a.name
+ORDER BY Music_Genres;
 
+WITH all_tuples_of_mg 
+AS (
+    SELECT
+        GROUP_CONCAT(mg.name ORDER BY mg.name SEPARATOR ', ') AS Music_genres
+    FROM Artist a 
+    JOIN Artist_music_genres amg ON amg.artist_id = a.artist_id
+    JOIN Music_genres mg ON mg.music_genre_id = amg.music_genre_id
+    GROUP BY a.artist_id, a.name
+    ORDER BY Music_Genres
+)
+
+-- Main query 
+SELECT 
+    Music_Genres,
+    COUNT(*) AS Number_Appeared
+FROM all_tuples_of_mg
+GROUP BY Music_genres
+ORDER BY Number_Appeared DESC
+LIMIT 3;
