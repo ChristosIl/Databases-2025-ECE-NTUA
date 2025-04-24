@@ -169,17 +169,31 @@ SELECT
 FROM Staff s
 WHERE s.staff_role_id = 3;
 
+-- Query 9 --
+WITH count_of_valid_visits_per_visitor_for_specific_year
+AS (
+SELECT 
+    v.visitor_id, v.name, 
+    COUNT(*) AS Number_of_valid_visits_per_year
+FROM Visitor v 
+JOIN Ticket t ON t.visitor_id = v.visitor_id
+JOIN Event e ON e.event_id = t.event_id
+WHERE t.used = TRUE and YEAR(e.event_date) = 2025 
+GROUP BY v.visitor_id, v.name  
+ORDER BY Number_of_valid_visits_per_year
+)
+
+SELECT 
+    GROUP_CONCAT(name ORDER BY name SEPARATOR ', ') AS Visitors,
+    Number_of_valid_visits_per_year
+FROM count_of_valid_visits_per_visitor_for_specific_year
+WHERE Number_of_valid_visits_per_year > 3
+GROUP BY Number_of_valid_visits_per_year
+ORDER BY Number_of_valid_visits_per_year DESC ;
 
 -- Query 10  I think its done--
-SELECT 
-    DISTINCT(GROUP_CONCAT(mg.name ORDER BY mg.name SEPARATOR ', ')) AS Music_Genres
-    
-FROM Artist a 
-JOIN Artist_music_genres amg ON amg.artist_id = a.artist_id
-JOIN Music_genres mg ON mg.music_genre_id = amg.music_genre_id
-GROUP BY a.artist_id, a.name
-ORDER BY Music_Genres;
 
+-- subquery to find all music genre tuples based on the artists
 WITH all_tuples_of_mg 
 AS (
     SELECT
@@ -199,3 +213,6 @@ FROM all_tuples_of_mg
 GROUP BY Music_genres
 ORDER BY Number_Appeared DESC
 LIMIT 3;
+
+-- Query 11 -- 
+
