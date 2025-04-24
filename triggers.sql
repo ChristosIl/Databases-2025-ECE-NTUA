@@ -245,7 +245,7 @@ BEFORE INSERT ON Performance
 FOR EACH ROW
 BEGIN
 
-    DECLARE last_end_time FLOAT; 
+    DECLARE last_end_time TIME; 
 
     /*Find the last end time for event*/
     SELECT MAX(p.end_time) INTO last_end_time
@@ -253,13 +253,14 @@ BEGIN
     WHERE event_id = NEW.event_id
         AND p.end_time <= NEW.start_time;
 
-    IF last_end_time IS NOT NULL THEN 
-        IF NEW.start_time - last_end_time < 5 OR NEW.start_time - last_end_time> 30
-            THEN SIGNAL SQLSTATE '45000'
+   IF last_end_time IS NOT NULL THEN 
+        IF TIMESTAMPDIFF(MINUTE, last_end_time, NEW.start_time) < 5 
+            OR TIMESTAMPDIFF(MINUTE, last_end_time, NEW.start_time) > 30 THEN
+            SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Brake between two performances must be at least 5 minutes and maximum 30 minutes';
-        END IF;
+         END IF;
     END IF;
-END
+END;
 
 //
 

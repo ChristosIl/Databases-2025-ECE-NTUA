@@ -214,5 +214,15 @@ GROUP BY Music_genres
 ORDER BY Number_Appeared DESC
 LIMIT 3;
 
--- Query 11 -- 
+-- Query 11 / To Do! Thats an early stage. Continue Tomorrow-- 
 
+SELECT
+    a.artist_id, a.name,
+    COUNT(*) AS Total_performances
+FROM Artist a 
+JOIN Performs p ON p.artist_id = a.artist_id
+JOIN Performance perf ON perf.performs_id = p.performs_id
+JOIN Event e ON e.event_id = perf.event_id
+JOIN Festival f ON f.festival_id = e.festival_id
+WHERE f.year = 2025
+GROUP BY a.artist_id, a.name;

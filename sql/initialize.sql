@@ -199,8 +199,8 @@ CREATE TABLE IF NOT EXISTS Performance (
     performs_id INT NOT NULL,
     type_of_performance VARCHAR(255) NOT NULL,
     duration FLOAT NOT NULL, 
-    start_time FLOAT NOT NULL,
-    end_time FLOAT NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
     photo_url TEXT,
     photo_description TEXT,
 
