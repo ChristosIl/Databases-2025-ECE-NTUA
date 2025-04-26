@@ -283,7 +283,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Staff member already assigned to a different stage on this date.';
     END IF;
-END$$
+END;
 
 //
 
