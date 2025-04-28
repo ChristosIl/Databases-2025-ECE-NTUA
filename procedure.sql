@@ -112,4 +112,45 @@ BEGIN
     END IF;
 END $$
 
+
+DELIMITER $$
+--======================================
+-- Decide what you are going to do with the view
+--======================================
+CREATE OR REPLACE PROCEDURE Check_Stage_Staff_Coverage()
+BEGIN
+    SELECT 
+        w.event_id,
+        w.stage_id,
+        stg.name AS stage_name,
+        stf.staff_role_id,
+        r.name AS role_name,
+        COUNT(*) AS assigned_staff,
+        stg.max_capacity,
+        CASE 
+            WHEN stf.staff_role_id = 2 THEN ROUND(stg.max_capacity * 0.05)
+            WHEN stf.staff_role_id = 3 THEN ROUND(stg.max_capacity * 0.02)
+            ELSE 0
+        END AS required_staff,
+        CASE 
+            WHEN stf.staff_role_id IN (2, 3) THEN 
+                CASE 
+                    WHEN COUNT(*) >= 
+                        CASE 
+                            WHEN stf.staff_role_id = 2 THEN ROUND(stg.max_capacity * 0.05)
+                            WHEN stf.staff_role_id = 3 THEN ROUND(stg.max_capacity * 0.02)
+                        END 
+                    THEN '✔ OK'
+                    ELSE '✘ Understaffed'
+                END
+            ELSE 'N/A'
+        END AS status
+    FROM Works_on w
+    JOIN Stage stg ON w.stage_id = stg.stage_id
+    JOIN Staff stf ON w.staff_id = stf.staff_id
+    JOIN Staff_role r ON stf.staff_role_id = r.staff_role_id
+    WHERE stf.staff_role_id IN (1, 2, 3) 
+    GROUP BY w.event_id, w.stage_id, stf.staff_role_id;
+END $$
+
 DELIMITER ;
