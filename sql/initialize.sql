@@ -405,7 +405,7 @@ FROM Works_on w
 JOIN Stage stg ON w.stage_id = stg.stage_id
 JOIN Staff stf ON w.staff_id = stf.staff_id
 JOIN Staff_role r ON stf.staff_role_id = r.staff_role_id
-WHERE stf.staff_role_id IN (2, 3) -- Only security and support
+WHERE stf.staff_role_id IN (1, 2, 3) 
 GROUP BY w.event_id, w.stage_id, stf.staff_role_id;
 
 
