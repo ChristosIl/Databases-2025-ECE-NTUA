@@ -264,6 +264,7 @@ END;
 
 //
 
+--
 CREATE TRIGGER check_staff_availability_trigger
 BEFORE INSERT ON Works_on
 FOR EACH ROW 
@@ -286,6 +287,27 @@ BEGIN
 END;
 
 //
+
+-- Trigger to check if a rating occurs from a used ticket
+CREATE TRIGGER check_if_tck_is_used
+BEFORE INSERT ON Rating
+FOR EACH ROW
+BEGIN 
+    DECLARE ticket_used BOOLEAN;
+    DECLARE ticket_id_str VARCHAR(20);
+
+    SET ticket_id_str = CAST(NEW.ticket_id AS CHAR);
+
+    SELECT used INTO ticket_used
+    FROM Ticket 
+    WHERE ticket_id = NEW.ticket_id;
+
+    IF ticket_used = FALSE THEN
+    set @message_text = CONCAT_WS('Cannot insert rating: ticket with ID', ticket_id_str, ' was not used.');
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = @message_text;
+    END IF;
+END;
 
 DELIMITER ;
 
