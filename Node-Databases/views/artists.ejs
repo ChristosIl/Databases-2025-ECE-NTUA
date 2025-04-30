@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Artists</title>
+</head>
+<body>
+  <h1>Artists List</h1>
+  <ul>
+    <% artists.forEach(artist => { %>
+      <li><%= artist.name %></li>
+    <% }) %>
+  </ul>
+  <a href="/">Back</a>
+</body>
+</html>

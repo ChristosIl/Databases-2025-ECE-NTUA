@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Query 1 Results</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Query 1 Answer</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Festival</th>
+        <th>Year</th>
+        <th>Payment Method</th>
+        <th>Ticket Type</th>
+        <th>Total Revenue (€)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% query1.forEach(row => { %>
+        <tr>
+          <td><%= row.FESTIVAL %></td>
+          <td><%= row.festival_year %></td>
+          <td><%= row.Payment_method %></td>
+          <td><%= row.Ticket_type %></td>
+          <td><%= Number(row.Total_Revenue).toFixed(2) %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <br>
+  <a href="/">Back to Home</a>
+</body>
+</html>
