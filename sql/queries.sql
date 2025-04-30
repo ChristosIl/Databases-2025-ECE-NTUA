@@ -121,6 +121,50 @@ WHERE LOWER(perf.type_of_performance) = 'warm up'
 GROUP BY a.artist_id, f.festival_id
 HAVING COUNT(*) > 2;
 
+-- Query 4 -- 
+--EXPLAIN FORMAT=JSON
+
+SELECT
+    COALESCE(a.name, b.name) AS Performer_Name, 
+    CASE WHEN a.artist_id IS NOT NULL THEN 'Artist' ELSE 'Band' END AS Performer_Type, 
+    AVG(r.interpretation_rating) AS Avg_Interpretation_Rating,
+    AVG(r.overall_impression) AS Avg_Overall_Impression
+FROM Rating r
+JOIN Performance p ON r.performance_id = p.performance_id
+JOIN Performs pf ON p.performs_id = pf.performs_id
+LEFT JOIN Artist a ON pf.artist_id = a.artist_id
+LEFT JOIN Band b ON pf.band_id = b.band_id   
+WHERE
+    -- We choose which ever artist we want
+    a.artist_id = 1 
+    OR
+    -- We choose which ever band we want
+    b.band_id = 1 
+GROUP BY COALESCE(a.name, b.name), CASE WHEN a.artist_id IS NOT NULL THEN 'Artist' ELSE 'Band' END;
+
+-- Query 4 / FORCE INDEXES /Filtering is happening inside the JOINS to take advantage of--
+-- Force Indexes --
+--EXPLAIN FORMAT=JSON
+
+SELECT
+    COALESCE(a.name, b.name) AS Performer_Name, 
+    CASE WHEN a.artist_id IS NOT NULL THEN 'Artist' ELSE 'Band' END AS Performer_Type, 
+    AVG(r.interpretation_rating) AS Avg_Interpretation_Rating,
+    AVG(r.overall_impression) AS Avg_Overall_Impression
+FROM Rating r
+JOIN Performance p FORCE INDEX (idx_performance_performs_id) 
+    ON r.performance_id = p.performance_id
+JOIN Performs pf 
+    ON p.performs_id = pf.performs_id
+LEFT JOIN Artist a 
+    ON pf.artist_id = a.artist_id AND a.artist_id = 1 
+LEFT JOIN Band b 
+    ON pf.band_id = b.band_id AND b.band_id = 5     
+GROUP BY Performer_Name, Performer_Type
+
+
+
+
 -- Query 5 --
 -- TO DO! Needs more data to be checked --
 SELECT 
@@ -136,7 +180,32 @@ GROUP BY a.artist_id, a.name
 ORDER BY total_festival_participations DESC
 LIMIT 10;
 
--- Query 7
+-- Query 6 -- 
+
+SELECT
+    v.name AS Visitor_Name,
+    v.surname AS Visitor_Surname,
+    e.event_name AS Event_Name,
+    p.performance_id,
+    p.type_of_performance,
+    AVG((r.interpretation_rating + r.sound_and_lighting_rating + r.stage_presence_rating + r.organization_rating + r.overall_impression) / 5.0)
+        AS Avg_Visitor_Total_Rating_Per_Performance
+FROM Rating r
+JOIN Ticket t ON r.ticket_id = t.ticket_id
+JOIN Visitor v ON t.visitor_id = v.visitor_id
+JOIN Performance p ON r.performance_id = p.performance_id
+JOIN Event e ON p.event_id = e.event_id
+/* Define visitor */
+WHERE v.visitor_id = 1 
+  AND t.used = TRUE
+GROUP BY
+    v.visitor_id, v.name, v.surname,
+    e.event_id, e.event_name,
+    p.performance_id, p.type_of_performance, p.start_time 
+ORDER BY e.event_name, p.start_time;
+
+
+-- Query 7 -- 
 
 SELECT
     f.festival_id, f.name AS FESTIVAL,
@@ -296,3 +365,60 @@ JOIN Continent c ON c.continent_id = l.continent_id
 GROUP BY a.artist_id, a.name 
 HAVING COUNT(DISTINCT c.continent_id) >= 3
 ORDER BY Continents_participated DESC;
+
+
+-- Query 14 -- 
+
+
+-- Query 15 --
+
+WITH VisitorScores AS (
+    SELECT
+        v.visitor_id,
+        v.name AS Visitor_Name,
+        v.surname AS Visitor_Surname,
+        a.artist_id AS Performer_ID,
+        a.name AS Performer_Name,
+        'Artist' AS Performer_Type,
+        SUM(r.interpretation_rating + r.sound_and_lighting_rating + r.stage_presence_rating + r.organization_rating + r.overall_impression)
+            AS Total_Rating_Score
+    FROM Rating r
+    JOIN Ticket t ON r.ticket_id = t.ticket_id
+    JOIN Visitor v ON t.visitor_id = v.visitor_id
+    JOIN Performance p ON r.performance_id = p.performance_id
+    JOIN Performs pf ON p.performs_id = pf.performs_id
+    JOIN Artist a ON pf.artist_id = a.artist_id
+
+    GROUP BY v.visitor_id, v.name, v.surname, a.artist_id, a.name
+
+    UNION ALL
+
+    SELECT
+        v.visitor_id,
+        v.name AS Visitor_Name,
+        v.surname AS Visitor_Surname,
+        b.band_id AS Performer_ID,
+        b.name AS Performer_Name,
+        'Band' AS Performer_Type,
+        SUM(r.interpretation_rating + r.sound_and_lighting_rating + r.stage_presence_rating + r.organization_rating + r.overall_impression)
+            AS Total_Rating_Score
+    FROM Rating r
+    JOIN Ticket t ON r.ticket_id = t.ticket_id
+    JOIN Visitor v ON t.visitor_id = v.visitor_id
+    JOIN Performance p ON r.performance_id = p.performance_id
+    JOIN Performs pf ON p.performs_id = pf.performs_id
+    JOIN Band b ON pf.band_id = b.band_id
+    GROUP BY v.visitor_id, v.name, v.surname, b.band_id, b.name
+)
+
+SELECT
+    Visitor_Name,
+    Visitor_Surname,
+    Performer_Name,
+    Performer_Type,
+    Total_Rating_Score
+FROM VisitorScores
+WHERE
+    Performer_ID = 1 AND Performer_Type = 'Artist' -- Αντικατάσταση με το ID και τον Τύπο ('Artist' ή 'Band') του performer
+ORDER BY Total_Rating_Score DESC
+LIMIT 5;

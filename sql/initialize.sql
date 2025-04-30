@@ -370,6 +370,14 @@ CREATE TABLE Resale_Log (
 
 -- Creating Indexes after all tables are created
 CREATE INDEX idx_performer_nickname ON Artist(nickname);
+CREATE INDEX idx_artist_id ON Artist(artist_id);
+CREATE INDEX idx_band_id ON Band(band_id);
+
+-- Query 4 Force indexes plan --
+CREATE INDEX idx_rating_performance_id ON Rating(performance_id);
+CREATE INDEX idx_performance_performs_id ON Performance(performs_id);
+CREATE INDEX idx_performs_artist_id ON Performs(artist_id);
+CREATE INDEX idx_performs_band_id ON Performs(band_id);
 
 
 
