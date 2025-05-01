@@ -3,13 +3,15 @@ const path = require('path');
 const app = express();
 const PORT = 4000;
 
+app.use(express.urlencoded({ extended: true }));
+
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Routes 
-const ArtistsRoutes = require('./routes/artists');
-app.use('/artists', ArtistsRoutes);
+// const ArtistsRoutes = require('./routes/artists');
+// app.use('/artists', ArtistsRoutes);
 const query1Route = require('./routes/query-1');
 app.use('/query-1', query1Route);
 const query2Route = require('./routes/query-2');
@@ -40,9 +42,23 @@ const query14Route = require('./routes/query-14');
 app.use('/query-14', query14Route);
 const query15Route = require('./routes/query-15');
 app.use('/query-15', query15Route);
+const index = require('./routes/index');
+app.use('/index', index);
+
 app.get('/', (req, res) => {
-    res.render('index'); //gives back index.ejs
-  })
+  res.render('Login-Screen', { error: null }); // initial load with no error
+});
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (username === 'root' && password === 'root'){
+      res.redirect('/index');
+    } else 
+    {
+      res.render('Login-Screen', { error: 'Invalid credentials' });
+    }
+  });
 
 
 
