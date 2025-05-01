@@ -1,0 +1,3 @@
+
+artist_id	Artist_Name	FESTIVAL	festival_id	event_name	Warm_Up_Count
+1	Steven Rodriguez	Global Beats Festival	1	Rock Night	5

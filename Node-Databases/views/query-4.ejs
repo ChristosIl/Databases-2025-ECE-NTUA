@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 4 Results</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Performer Name</th>
+                <th>Performer Type</th>
+                <th>Average Interpretation Rating</th>
+                <th>Average Overall Impression</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% query4.forEach(row => { %>
+                <tr>
+                    <td><%= row.Performer_Name %></td>
+                    <td><%= row.Performer_Type %></td>
+                    <td><%= row.Avg_Interpretation_Rating %></td>
+                    <td><%= row.Avg_Overall_Impression %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,2 @@
+festival_id	FESTIVAL	AVG_working_experience_of_technicians
+6	Indie Rising	3.41

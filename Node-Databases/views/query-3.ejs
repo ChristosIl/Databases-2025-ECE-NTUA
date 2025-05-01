@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 3 Results</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Artist_id</th>
+                <th>Artist Name</th>
+                <th>FESTIVAL</th>
+                <th>Festival Id</th>
+                <th>Event Name</th>
+                <th>Warm Up Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% query3.forEach(row => { %>
+                <tr>
+                    <td><%= row.artist_id %></td>
+                    <td><%= row.Artist_Name %></td>
+                    <td><%= row.FESTIVAL %></td>
+                    <td><%= row.festival_id %></td>
+                    <td><%= row.event_name %></td>
+                    <td><%= row.Warm_Up_Count %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

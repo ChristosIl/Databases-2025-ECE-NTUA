@@ -1,0 +1,27 @@
+FESTIVAL	festival_year	Payment_method	Ticket_type	    Total_Revenue
+Global Beats Festival	2025	Bank Transfer	Backstage	    3192.30
+Global Beats Festival	2025	Bank Transfer	General	        2345.80
+Global Beats Festival	2025	Bank Transfer	VIP	            1989.79
+Global Beats Festival	2025	Credit Card	    Backstage	    2631.54
+Global Beats Festival	2025	Credit Card	    General	        2066.19
+Global Beats Festival	2025	Credit Card	    VIP	            2994.46
+Global Beats Festival	2025	Debit Card	    Backstage	    2053.47
+Global Beats Festival	2025	Debit Card	    General	        2596.59
+Global Beats Festival	2025	Debit Card	    VIP	            2816.73
+Future Pulse	2026	Bank    Transfer	    Backstage	    513.95
+Future Pulse	2026	Bank    Transfer	    General	        196.82
+Future Pulse	2026	Bank    Transfer	    VIP	            504.45
+Future Pulse	2026	Credit  Card	        Backstage	    95.89
+Future Pulse	2026	Credit  Card	        General	        594.37
+Future Pulse	2026	Credit  Card	        VIP	            326.14
+Future Pulse	2026	Debit   Card	        Backstage	    205.63
+Future Pulse	2026	Debit   Card	        General	        343.84
+Unity Fest	    2027	Bank    Transfer	    Backstage	    399.29
+Unity Fest	    2027	Bank    Transfer	    General	        120.97
+Unity Fest	    2027	Bank    Transfer	    VIP	            197.34
+Unity Fest	    2027	Credit  Card	        Backstage	    316.06
+Unity Fest	    2027	Credit  Card	        General	        197.74
+Unity Fest	    2027	Credit  Card	        VIP	            217.08
+Unity Fest	    2027	Debit   Card	        Backstage	    115.80
+Unity Fest	    2027	Debit   Card	        General	        124.49
+Unity Fest	    2027	Debit   Card	        VIP	            130.61

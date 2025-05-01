@@ -1,0 +1,6 @@
+Visitor_Name	Visitor_Surname	Performer_Name	Performer_Type	Total_Rating_Score
+Justin	Singh	Steven Rodriguez	Artist	25
+Samantha	Mahoney	Steven Rodriguez	Artist	25
+Larry	Cook	Steven Rodriguez	Artist	25
+Christos	Iliak	Steven Rodriguez	Artist	24
+Lisa	Mccarthy	Steven Rodriguez	Artist	23

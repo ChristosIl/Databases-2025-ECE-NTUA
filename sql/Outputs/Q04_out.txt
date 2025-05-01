@@ -1,0 +1,12 @@
+Performer_Name	Performer_Type	Avg_Interpretation_Rating	Avg_Overall_Impression
+Steven Rodriguez	Artist	        4.6250	                    4.6250
+
+
+
+
+----
+
+
+Performer_Name	Performer_Type	Avg_Interpretation_Rating	Avg_Overall_Impression
+Beck, Lewis and Kaiser	Band	4.0000	4.5000
+Steven Rodriguez	Artist	4.6250	4.6250

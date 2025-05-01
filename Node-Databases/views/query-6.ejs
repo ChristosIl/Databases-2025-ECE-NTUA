@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 6 Results</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Visitor Name</th>
+                <th>Visitor Surname</th>
+                <th>Event Name</th>
+                <th>Performance Id</th>
+                <th>Type Of Performance</th>
+                <th>Average Visitor Total Rating Per Performance </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% query6.forEach(row => { %>
+                <tr>
+                    <td><%= row.Visitor_Name %></td>
+                    <td><%= row.Visitor_Surname %></td>
+                    <td><%= row.Event_Name %></td>
+                    <td><%= row.performance_id %></td>
+                    <td><%= row.type_of_performance %></td>
+                    <td><%= row.Avg_Visitor_Total_Rating_Per_Performance %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

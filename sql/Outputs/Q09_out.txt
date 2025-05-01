@@ -1,0 +1,4 @@
+Visitors	Number_of_valid_visits_per_year
+Jennifer, Shelby	6
+Ernest, Jessica, Kendra, Larry, Ryan	5
+Christos, Justin, Michael, Stacy	4

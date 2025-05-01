@@ -1,0 +1,25 @@
+artist_id	Artist	Music_Genre	Year_of_participation	FESTIVAL	participated
+1	Steven Rodriguez	Electronic	NULL	NULL	No
+1	Steven Rodriguez	Electronic	2025	Global Beats Festival	Yes
+4	Angel Williams	    Electronic	2025	Global Beats Festival	Yes
+6	Hannah Reynolds	    Electronic	2025	Global Beats Festival	Yes
+7	Erik Valentine	    Electronic	2025	Sunset Soundscapes	Yes
+9	Jennifer Medina	    Electronic	2025	Sunset Soundscapes	Yes
+14	Patrick Hatfield	Electronic	NULL	NULL	No
+14	Patrick Hatfield	Electronic	2025	Rhythm Nation	Yes
+18	Lori Carr	        Electronic	2025	Rhythm Nation	Yes
+19	Brittney Wright	    Electronic	2025	Indie Rising	Yes
+24	Joseph Weaver	    Electronic	NULL	NULL	No
+24	Joseph Weaver	    Electronic	2025	Indie Rising	Yes
+26	Timothy Holloway	Electronic	2025	Electro World	Yes
+28	David Campos	    Electronic	2025	Folk Routes	Yes
+30	Mrs. Mariah Dawson DDS	Electronic	NULL	NULL	No
+35	Wesley Pope	        Electronic	NULL	NULL	No
+36	Christopher Hurst	Electronic	NULL	NULL	No
+37	Nicole Lopez	    Electronic	NULL	NULL	No
+38	Bruce Scott	        Electronic	NULL	NULL	No
+39	Catherine Taylor	Electronic	NULL	NULL	No
+41	Kimberly Calderon	Electronic	NULL	NULL	No
+42	Julie Jenkins	    Electronic	NULL	NULL	No
+44	Deborah Patel	    Electronic	NULL	NULL	No
+46	Sean Lewis	        Electronic	NULL	NULL	No

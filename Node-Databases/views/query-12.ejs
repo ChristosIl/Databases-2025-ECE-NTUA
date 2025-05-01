@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Query 9 Results</title>
+    <title>Query 10 Results</title>
     <style>
         table, th, td {
           border: 1px solid black;
@@ -16,15 +16,21 @@
     <table>
         <thead>
             <tr>
-                <th>Visitors</th>
-                <th>Number Of Valid Visits Per Year</th>
+                <th>Event Id</th>
+                <th>Event Date</th>
+                <th>Staff Role Id</th>
+                <th>Role Name</th>
+                <th>Total Required Staff</th>
             </tr>
         </thead>
         <tbody>
-            <% query9.forEach(row => { %>
+            <% query12.forEach(row => { %>
                 <tr>
-                    <td><%= row.Visitors %></td>
-                    <td><%= row.Number_of_valid_visits_per_year %></td>
+                    <td><%= row.event_id %></td>
+                    <td><%= new Date(row.event_date).toDateString() %></td>
+                    <td><%= row.staff_role_id %></td>
+                    <td><%= row.role_name %></td>
+                    <td><%= row.total_required_staff %></td>
                 </tr>
             <% }); %>
         </tbody>

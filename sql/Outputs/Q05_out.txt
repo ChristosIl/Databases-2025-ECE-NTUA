@@ -1,0 +1,8 @@
+artist_id	Artist_name	total_festival_participations
+1	Steven Rodriguez	7
+4	Angel Williams	2
+14	Patrick Hatfield	2
+25	Ruben Williams	2
+7	Erik Valentine	1
+10	Isaac Phillips	1
+26	Timothy Holloway	1

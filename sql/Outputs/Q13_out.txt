@@ -1,0 +1,2 @@
+artist_id	name	Continents_participated
+1	Steven Rodriguez	3
