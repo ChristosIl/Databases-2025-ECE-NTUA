@@ -45,10 +45,12 @@ app.use('/query-15', query15Route);
 const index = require('./routes/index');
 app.use('/index', index);
 
+// Initial load 
 app.get('/', (req, res) => {
-  res.render('Login-Screen', { error: null }); // initial load with no error
+  res.render('Login-Screen', { error: null }); 
 });
 
+// Take credentials from the Login Screen through POST
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -59,8 +61,6 @@ app.post('/login', (req, res) => {
       res.render('Login-Screen', { error: 'Invalid credentials' });
     }
   });
-
-
 
 
 
