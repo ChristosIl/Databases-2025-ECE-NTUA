@@ -2,24 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Query 3 Results</title>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: white;
+        }
+
         table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-          padding: 8px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            margin: 0 auto;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;
+            font-size: 40px;
+            font-family: 'Courier New', Courier, monospace;
+            width: 100%;
+        }
+
+        .title-section {
+            background-color: blue;
+            padding: 40px;
+            border-radius: 0;
+            margin-bottom: 30px;
+        }
+
+        .Back-Home a {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 25px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .Back-Home a:hover {
+            color: blue;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <div class="title-section">
+        <h1>Query 3 Results</h1>
+    </div>
+
     <table>
         <thead>
             <tr>
-                <th>Artist_id</th>
+                <th>Artist ID</th>
                 <th>Artist Name</th>
-                <th>FESTIVAL</th>
-                <th>Festival Id</th>
+                <th>Festival</th>
+                <th>Festival ID</th>
                 <th>Event Name</th>
                 <th>Warm Up Count</th>
             </tr>
@@ -37,8 +77,10 @@
             <% }); %>
         </tbody>
     </table>
-    
+
     <br>
-    <a href="/">Back to Home</a>
+    <div class="Back-Home">
+        <a href="/">Back to Home</a>
+    </div>
 </body>
 </html>

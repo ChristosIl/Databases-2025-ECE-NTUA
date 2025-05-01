@@ -3,72 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home Page</title>
+
+    <Style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+        }
+
+        h1  {
+            margin-bottom: 20px;
+            color: white;
+            font-size: 40px;
+            width: 100%;
+        }
+
+        form {
+            margin: 15px auto;
+        }
+
+        button {
+            width: 90px;
+            height: 70px;
+            padding: 15px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            border: none;
+            border-radius: 8px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            outline: solid;
+            outline-color: black;
+        }
+
+        button:hover {
+            background-color: wheat;
+        }
+
+        
+
+        .title-section {
+            background-color: blue; /* Ροζ ανοιχτό */
+            padding: 40px;
+            border-radius: 0px;
+            margin-bottom: 30px;
+        }
+
+        .buttons_section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0px;
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            
+            
+            box-sizing: border-box;
+        }
+    </Style>
 </head>
 <body>
-    <h1>Hello World (EJS)!</h1>
-    <form action="/artists">
-     <button type="submit">Show Artists</button>
-    </form>
-
-    <form action="/query-1">
-        <button type="submit">Query 1</button>
-    </form>
-
-    <form action="/query-2">
-        <button type="submit">Query 2</button>
-    </form>
-
-    <form action="/query-3">
-        <button type="submit">Query 3</button>
-    </form>
-
-    <form action="/query-4">
-        <button type="submit">Query 4</button>
-    </form>
-
-    <form action="/query-5">
-        <button type="submit">Query 5</button>
-    </form>
-
-    <form action="/query-6">
-        <button type="submit">Query 6</button>
-    </form>
-
-    <form action="/query-7">
-        <button type="submit">Query 7</button>
-    </form>
-
-    <form action="/query-8">
-        <button type="submit">Query 8</button>
-    </form>
-
-    <form action="/query-9">
-        <button type="submit">Query 9</button>
-    </form>
-
-    <form action="/query-10">
-        <button type="submit">Query 10</button>
-    </form>
-
-    <form action="/query-11">
-        <button type="submit">Query 11</button>
-    </form>
-
-    <form action="/query-12">
-        <button type="submit">Query 12</button>
-    </form>
-
-    <form action="/query-13">
-        <button type="submit">Query 13</button>
-    </form>
-
-    <form action="/query-14">
-        <button type="submit">Query 14</button>
-    </form>
-
-    <form action="/query-15">
-        <button type="submit">Query 15</button>
-    </form>
+    
+        <div class="title-section">
+            <h1>Databases 2025 Festival Management!</h1>
+        </div>
+        
+    <div class="buttons_section">
+        <!-- <form action="/artists">
+            <button type="submit">Show Artists</button>
+           </form> -->
+       
+           <form action="/query-1">
+               <button type="submit">Query 1</button>
+           </form>
+       
+           <form action="/query-2">
+               <button type="submit">Query 2</button>
+           </form>
+       
+           <form action="/query-3">
+               <button type="submit">Query 3</button>
+           </form>
+       
+           <form action="/query-4">
+               <button type="submit">Query 4</button>
+           </form>
+       
+           <form action="/query-5">
+               <button type="submit">Query 5</button>
+           </form>
+       
+           <form action="/query-6">
+               <button type="submit">Query 6</button>
+           </form>
+       
+           <form action="/query-7">
+               <button type="submit">Query 7</button>
+           </form>
+       
+           <form action="/query-8">
+               <button type="submit">Query 8</button>
+           </form>
+       
+           <form action="/query-9">
+               <button type="submit">Query 9</button>
+           </form>
+       
+           <form action="/query-10">
+               <button type="submit">Query 10</button>
+           </form>
+       
+           <form action="/query-11">
+               <button type="submit">Query 11</button>
+           </form>
+       
+           <form action="/query-12">
+               <button type="submit">Query 12</button>
+           </form>
+       
+           <form action="/query-13">
+               <button type="submit">Query 13</button>
+           </form>
+       
+           <form action="/query-14">
+               <button type="submit">Query 14</button>
+           </form>
+       
+           <form action="/query-15">
+               <button type="submit">Query 15</button>
+           </form>
+    </div>
+    
 </body>
 </html>
