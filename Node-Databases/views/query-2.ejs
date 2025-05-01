@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 2 Results</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Artist_id</th>
+                <th>Artist</th>
+                <th>Music Genre</th>
+                <th>Year of Participation</th>
+                <th>FESTIVAL</th>
+                <th>Participated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% query2.forEach(row => { %>
+                <tr>
+                    <td><%= row.artist_id %></td>
+                    <td><%= row.Artist %></td>
+                    <td><%= row.Music_Genre %></td>
+                    <td><%= row.Year_of_participation %></td>
+                    <td><%= row.FESTIVAL %></td>
+                    <td><%= row.participated %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

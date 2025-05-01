@@ -3,7 +3,7 @@ const pool = mariadb.createPool({
      host: 'localhost', 
      user:'root', 
      password: 'root',
-     connectionLimit: 5,
+     connectionLimit: 15,
      database: 'festival_database'
 });
 

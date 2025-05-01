@@ -11,9 +11,11 @@ app.set('views', path.join(__dirname, 'views'));
 const ArtistsRoutes = require('./routes/artists');
 app.use('/artists', ArtistsRoutes);
 
-const query1Routes = require('./routes/query-1');
-app.use('/query-1', query1Routes);
+const query1Route = require('./routes/query-1');
+app.use('/query-1', query1Route);
 
+const query2Route = require('./routes/query-2');
+app.use('/query-2', query2Route)
 
 app.get('/', (req, res) => {
     res.render('index'); //gives back index.ejs

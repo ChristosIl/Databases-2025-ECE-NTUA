@@ -8,7 +8,7 @@ router.get('/', async (req, res)=>{
 
     try{
         conn = await pool.getConnection();
-        query1 = await conn.query(
+        const  query1 = await conn.query(
             `
             SELECT 
               f.name AS FESTIVAL, 
@@ -27,7 +27,7 @@ router.get('/', async (req, res)=>{
             `
         );
         res.render('query-1', { query1 });
-
+        
     }
     catch(err)
     {
@@ -35,7 +35,7 @@ router.get('/', async (req, res)=>{
         res.status(500).send('Database error connection');
     }
     finally{
-
+        if (conn) conn.release();
     }
 })
 
