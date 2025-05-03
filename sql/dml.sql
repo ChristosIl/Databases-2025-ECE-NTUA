@@ -11,7 +11,11 @@
     TRUNCATE TABLE Festival;
     TRUNCATE TABLE Event;
     TRUNCATE TABLE Artist;
+    TRUNCATE TABLE Artist_music_genres;
+    TRUNCATE TABLE Artist_sub_music_genres;
     TRUNCATE TABLE Band;
+    TRUNCATE TABLE Band_music_genres;
+    TRUNCATE TABLE Band_sub_music_genres;
     TRUNCATE TABLE Belongs_to;
     TRUNCATE TABLE Performs;
     TRUNCATE TABLE Performance;
@@ -1104,6 +1108,57 @@
     (14, 'Dawson and Sons', '2010-09-08', 'Amy Brown, Elizabeth Foster, Denise Stevenson, William Roberts, Gregory Martinez', 'https://instagram.com/williamcraig', 'https://www.brock-lopez.com/', 'https://dummyimage.com/488x733', 'However onto maybe raise to unit very.'),
     (15, 'Fleming Group', '2015-07-07', 'Lisa Sullivan, Jorge Neal, Cathy Shaw', 'https://instagram.com/gomezstacy', 'https://www.lopez-austin.com/', 'https://dummyimage.com/824x364', 'Generation piece kind near us free.');
     
+    INSERT INTO Band_music_genres (band_id, music_genre_id)
+    VALUES
+    (1, 4),
+    (2, 4),
+    (3, 2),
+    (4, 4),
+    (5, 1),
+    (6, 5),
+    (7, 3),
+    (8, 1),
+    (9, 2),
+    (10, 1),
+    (11, 2),
+    (12, 1),
+    (13, 3),
+    (14, 3),
+    (15, 1);
+
+    INSERT INTO Band_sub_music_genres (band_id, sub_music_genre_id)
+    VALUES
+    (1, 10),
+    (1, 11),
+    (2, 10),
+    (2, 11),
+    (3, 4),
+    (3, 5),
+    (4, 10),
+    (4, 11),
+    (5, 3),
+    (5, 2),
+    (6, 13),
+    (6, 12),
+    (7, 9),
+    (7, 7),
+    (8, 3),
+    (8, 2),
+    (9, 4),
+    (9, 5),
+    (10, 3),
+    (10, 2),
+    (11, 6),
+    (11, 5),
+    (12, 1),
+    (12, 3),
+    (13, 7),
+    (13, 8),
+    (14, 7),
+    (14, 8),
+    (15, 1),
+    (15, 2);
+
     /*Populate Belongs to Table*/
     INSERT INTO Belongs_to (artist_id, band_id) 
     VALUES

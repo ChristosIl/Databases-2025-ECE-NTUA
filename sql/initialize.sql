@@ -27,6 +27,11 @@ DROP TABLE IF EXISTS Belongs_to;
 DROP TABLE IF EXISTS Resale_Log;
 DROP TABLE IF EXISTS Music_genres;
 DROP TABLE IF EXISTS Sub_music_genres;
+DROP TABLE IF EXISTS Artist_music_genres;
+DROP TABLE IF EXISTS Artist_sub_music_genres;
+DROP TABLE IF EXISTS Band_music_genres;
+DROP TABLE IF EXISTS Band_sub_music_genres;
+
 -- Enables again foreign keys
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -173,6 +178,22 @@ CREATE TABLE IF NOT EXISTS Band (
     photo_url TEXT,
     photo_description TEXT
 
+);
+
+CREATE TABLE IF NOT EXISTS Band_music_genres (
+    band_id INT,
+    music_genre_id INT,
+    PRIMARY KEY (band_id, music_genre_id),
+    FOREIGN KEY (band_id) REFERENCES Band(band_id),
+    FOREIGN KEY (music_genre_id) REFERENCES Music_genres(music_genre_id)
+);
+
+CREATE TABLE IF NOT EXISTS Band_sub_music_genres (
+    band_id INT,
+    sub_music_genre_id INT,
+    PRIMARY KEY (band_id, sub_music_genre_id),
+    FOREIGN KEY (band_id) REFERENCES Band(band_id),
+    FOREIGN KEY (sub_music_genre_id) REFERENCES Sub_music_genres(sub_music_genre_id)
 );
 
 -- Performs Table
