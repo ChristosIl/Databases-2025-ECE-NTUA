@@ -115,7 +115,7 @@ END $$
 
 DELIMITER $$
 --======================================
--- Decide what you are going to do with the view
+-- Check staff coverage per stage and event based on role requirements
 --======================================
 CREATE OR REPLACE PROCEDURE Check_Stage_Staff_Coverage()
 BEGIN

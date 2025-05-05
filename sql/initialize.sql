@@ -398,7 +398,7 @@ CREATE INDEX idx_rating_performance_id ON Rating(performance_id);
 CREATE INDEX idx_performs_artist_id ON Performs(artist_id);
 CREATE INDEX idx_performs_band_id ON Performs(band_id);
 CREATE INDEX idx_performance_event_id ON Performance(event_id);
-----
+--
 
 CREATE INDEX idx_ticket_visitor_used ON Ticket(visitor_id, used, ticket_id);
 CREATE INDEX idx_rating_ticket_id ON Rating(ticket_id, performance_id);
