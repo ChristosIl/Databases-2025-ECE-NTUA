@@ -1343,7 +1343,7 @@
     (79, 29, 61, 'Warm Up', 1.0, '20:10:00', '21:10:00', 'url', 'Opening for rock'),
     (80, 30, 62, 'Headline', 2.0, '20:10:00', '22:10:00', 'url', 'Lead act'),
     (81, 31, 63, 'Warm Up', 1.0, '20:10:00', '21:10:00', 'url', 'New stage appearance'),
-    (82, 32, 64, 'Headline', 2.0, '20:10:00', '22:10:00', 'url', 'Late night headline');
+    (82, 32, 64, 'Headline', 2.0, '20:10:00', '22:10:00', 'url', 'Late night headline'),
     (83, 32, 50, 'Special Guest', 1.0, '22:40:00', '23:40:00', 'url', 'desc'), 
     (84, 33, 44, 'Special Guest', 1.5, '20:30:00', '22:00:00', 'url', 'desc'), 
     (85, 34, 45, 'Warm Up', 1.0, '20:30:00', '21:30:00', 'url', 'desc'),      
