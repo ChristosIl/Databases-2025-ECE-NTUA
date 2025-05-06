@@ -1787,11 +1787,6 @@
 
 
 
-
-
-
-
-
     /*To check the trigger for resale queue insertion run first the demand queue inserts and then these*/
     INSERT INTO Resale_Queue (resale_id, ticket_id, seller_id, listing_date, price, status) 
     VALUES 

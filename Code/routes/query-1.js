@@ -7,7 +7,10 @@ router.get('/', async (req, res)=>{
     let conn; 
 
     try{
+        console.log("Connecting to DB...");
         conn = await pool.getConnection();
+        console.log("Connected.");    
+        
         const  query1 = await conn.query(
             `
             SELECT 
@@ -26,6 +29,7 @@ router.get('/', async (req, res)=>{
 
             `
         );
+        console.log("Query result:", query1);
         res.render('query-1', { query1 });
         
     }
