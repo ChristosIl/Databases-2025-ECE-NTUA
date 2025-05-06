@@ -1,4 +1,3 @@
-version: '3.8'
 
 services: 
   mariadb:
@@ -18,7 +17,25 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer_controler
+    container_name: adminer_controller
     restart: always
     ports:
       - 8080:8080      
+
+  nodeapp:
+    container_name: node_server
+    build: ./Code
+    ports:
+      - 4000:4000
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      DB_HOST: mariadb    
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: festival_database
+    volumes:
+      - ./Code:/app
+    working_dir: /app
+    command: npm run dev
