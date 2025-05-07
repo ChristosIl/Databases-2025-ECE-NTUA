@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS festival_database;
+USE festival_database;
+
 -- Disable foreign key checks before dropping tables
 SET FOREIGN_KEY_CHECKS=0; 
 
@@ -398,9 +401,9 @@ CREATE INDEX idx_performance_event_performs ON Performance(event_id, performs_id
 CREATE INDEX idx_ticket_visitor_used ON Ticket(visitor_id, used, ticket_id);
 CREATE INDEX idx_rating_ticket_perf ON Rating(ticket_id, performance_id);
 CREATE INDEX idx_ticket_visitor ON Ticket(ticket_id, visitor_id);
-CREATE INDEX idx_rating_performance_id ON Rating(performance_id); --Q4
-CREATE INDEX idx_rating_ticket_id ON Rating(ticket_id, performance_id); --Q6
-CREATE INDEX idx_perf_event_start ON Performance(performance_id, event_id, start_time); --Q6
+CREATE INDEX idx_rating_performance_id ON Rating(performance_id); /*Q4*/
+CREATE INDEX idx_rating_ticket_id ON Rating(ticket_id, performance_id); /*Q6*/
+CREATE INDEX idx_perf_event_start ON Performance(performance_id, event_id, start_time); /*Q6*/
 
 
 -- View to check the population of assigned staff to every stage --
@@ -497,9 +500,10 @@ BEGIN
     DECLARE current_count INT;
     DECLARE max_capacity INT;
     DECLARE event_id_for_ticket INT;
+    DECLARE v_ticket_price FLOAT;
 
 /*Get event id from ticket*/
-SELECT event_id INTO event_id_for_ticket
+SELECT event_id, price INTO event_id_for_ticket, v_ticket_price
 FROM Ticket
 WHERE ticket_id = NEW.ticket_id;
 
@@ -518,6 +522,12 @@ WHERE e.event_id = event_id_for_ticket;
 IF current_count < max_capacity THEN
     SIGNAL SQLSTATE '45000'
     SET MESSAGE_TEXT = 'Resale queue is not available. Event not sold out yet.';
+END IF;
+
+/*Price must be the same*/
+IF v_ticket_price != NEW.price THEN 
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'You must sell your ticket to his initial price!';
 END IF;
 
 
@@ -821,9 +831,10 @@ BEGIN
     DECLARE current_visitor_id INT;
     DECLARE ticket_count INT;
     DECLARE new_visitor_id INT;
+    DECLARE v_resale_log_status BOOLEAN;
 /*Find ticket id from resale queue*/
-SELECT ticket_id
-INTO ticket_id_var
+SELECT ticket_id, status
+INTO ticket_id_var, v_resale_log_status
 FROM Resale_Queue
 WHERE resale_id = in_resale_id;
 
@@ -832,6 +843,11 @@ SELECT visitor_id
 INTO current_visitor_id
 FROM Ticket    
 WHERE ticket_id = ticket_id_var;
+
+IF v_resale_log_status = TRUE THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'This ticket has been sold';
+END IF;
 
 /*Count how many tickets the seller owns*/
 SELECT COUNT(*) INTO ticket_count
