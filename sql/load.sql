@@ -1,3 +1,5 @@
+    USE festival_database;
+    
     -- Disable foreign key checks
     SET foreign_key_checks = 0;
 
@@ -18,6 +20,7 @@
     TRUNCATE TABLE Band_sub_music_genres;
     TRUNCATE TABLE Belongs_to;
     TRUNCATE TABLE Performs;
+    TRUNCATE TABLE Type_of_performance;
     TRUNCATE TABLE Performance;
     TRUNCATE TABLE Visitor;
     TRUNCATE TABLE Ticket;

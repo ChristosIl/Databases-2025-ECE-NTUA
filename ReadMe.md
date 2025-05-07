@@ -64,16 +64,12 @@ $ git clone https://github.com/ChristosIl/Databases-2025.git
 # Go into the project folder 
 
 # Compose docker file
-$ Docker compose up -d
+$ docker compose build
 
-# Go into the Node.js repository
-$ cd Code
+# Start containers
+$ docker compose up -d
 
-# Install dependencies
-$ npm install
 
-# Run the app
-$ npm dev run
 
 ```
 
@@ -92,6 +88,9 @@ $ npm dev run
 
 ----
 * Για το query 11 θεωρούμε ότι η εφαρμογή υλοποιήθηκε με γνώμονα την καταγραφή από φέτος και χωρίς να έχει παλαιά αρχεία στα δεδομένα της. Επομένως θα θεωρήσουμε ως συμμετοχές, αυτές για το έτος του 2025 θεωρώντας ότι θα είναι αυτό που τελείωσε μετά το πέρας του χρόνου.
+
+----
+* Καλύφθηκαν όλες οι απαιτήσεις της εκφώνησεις είτε από περιορσιμούς είτε από triggers
 
 
 
