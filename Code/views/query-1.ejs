@@ -68,11 +68,11 @@
     <tbody>
       <% query1.forEach(row => { %>
         <tr>
-          <td><%= row.FESTIVAL %></td>
+          <td><%= row.festival_name %></td>
           <td><%= row.festival_year %></td>
           <td><%= row.Payment_method %></td>
           <td><%= row.Ticket_type %></td>
-          <td><%= Number(row.Total_Revenue).toFixed(2) %></td>
+          <td><%= Number(row.Total_revenue).toFixed(2) %></td>
         </tr>
       <% }); %>
     </tbody>

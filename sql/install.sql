@@ -216,12 +216,18 @@ CREATE TABLE IF NOT EXISTS Performs (
     )
 );
 
+-- Look Up table for the type of performance
+CREATE TABLE IF NOT EXISTS Type_of_performance (
+    type_of_performance_id INT NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Performance Table
 CREATE TABLE IF NOT EXISTS Performance (
     performance_id INT NOT NULL PRIMARY KEY,
     event_id INT NOT NULL,
     performs_id INT NOT NULL,
-    type_of_performance VARCHAR(255) NOT NULL,
+    type_of_performance INT NOT NULL,
     duration FLOAT NOT NULL, 
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
@@ -232,7 +238,11 @@ CREATE TABLE IF NOT EXISTS Performance (
         CHECK (duration <= 3.0),
 
     FOREIGN KEY(event_id) REFERENCES Event(event_id),
-    FOREIGN KEY(performs_id) REFERENCES Performs(performs_id) 
+    FOREIGN KEY(performs_id) REFERENCES Performs(performs_id),
+    FOREIGN KEY(type_of_performance) REFERENCES Type_of_performance(type_of_performance_id),
+
+    /* Check if the start time is before the end time */
+    CONSTRAINT chk_start_end_time CHECK (start_time < end_time)
 );
 
 -- Visitor Table
@@ -287,8 +297,8 @@ CREATE TABLE IF NOT EXISTS Ticket (
     FOREIGN KEY (payment_method_id) REFERENCES Payment_method(payment_method_id),
 
     CONSTRAINT check_price_be_over_zero CHECK (price > 0),
-    CONSTRAINT check_used_value CHECK (used IS TRUE OR used IS FALSE)
-    
+    CONSTRAINT check_used_value CHECK (used IS TRUE OR used IS FALSE),
+    CONSTRAINT unique_visitor_event UNIQUE (visitor_id, event_id)
 );
 
 -- Rating Table (we use likert rating)
@@ -788,6 +798,34 @@ END;
 
 //
 
+-- Trigger to prevent ticket insertion when max capacity has been reached for a stage
+CREATE TRIGGER check_if_max_cap_is_reached_to_insert_ticket
+BEFORE INSERT ON Ticket
+FOR EACH ROW
+BEGIN 
+
+    DECLARE number_of_tickets INT;
+    DECLARE max_capacity_of_stage INT;
+
+    /*COUNT of tickets for specific event*/
+    SELECT COUNT(*) INTO number_of_tickets
+    FROM Ticket
+    WHERE event_id = NEW.event_id;
+
+    /*Take max capacity of stage for this event*/
+    SELECT s.max_capacity INTO max_capacity_of_stage
+    FROM Event e
+    JOIN Stage s ON s.stage_id = e.stage_id
+    WHERE e.event_id = NEW.event_id;
+
+    IF number_of_tickets >= max_capacity_of_stage THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Tickets are sold out for this event';
+    END IF;
+
+END;
+
+//
 DELIMITER ;
 
 /* All seem to work. Check the status in resale and demand queue tables */

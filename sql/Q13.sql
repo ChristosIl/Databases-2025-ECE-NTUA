@@ -1,5 +1,5 @@
--- Query 13 Finished but make some inserts so you get back something for 3>--
--- I get back results if i remove the Having >= 3 restriction
+-- Query 13 --
+-- I get back more results if i remove the Having >= 3 restriction
 Select 
     a.artist_id, a.name,
     COUNT(DISTINCT c.continent_id) AS Continents_participated

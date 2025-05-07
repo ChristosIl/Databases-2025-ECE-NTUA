@@ -24,7 +24,7 @@ router.get('/', async (req, res)=> {
             WHERE  DATEDIFF(NOW(), Birth_date) < 10957
             GROUP BY a.artist_id, a.name
             ORDER BY total_festival_participations DESC
-            LIMIT 10;
+            ;
             `
         );
 

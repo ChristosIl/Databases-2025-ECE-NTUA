@@ -10,6 +10,6 @@ JOIN Performs p ON p.artist_id = a.artist_id
 JOIN Performance perf ON perf.performs_id = p.performs_id
 JOIN Event e ON e.event_id = perf.event_id
 JOIN Festival f ON e.festival_id = f.festival_id
-WHERE LOWER(perf.type_of_performance) = 'warm up'
+WHERE type_of_performance = 2 /* Set for warm up */
 GROUP BY a.artist_id, f.festival_id
 HAVING COUNT(*) > 2;

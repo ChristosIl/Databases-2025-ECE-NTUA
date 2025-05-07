@@ -1,27 +1,84 @@
-FESTIVAL	festival_year	Payment_method	Ticket_type	    Total_Revenue
-Global Beats Festival	2025	Bank Transfer	Backstage	    3192.30
-Global Beats Festival	2025	Bank Transfer	General	        2345.80
-Global Beats Festival	2025	Bank Transfer	VIP	            1989.79
-Global Beats Festival	2025	Credit Card	    Backstage	    2631.54
-Global Beats Festival	2025	Credit Card	    General	        2066.19
-Global Beats Festival	2025	Credit Card	    VIP	            2994.46
-Global Beats Festival	2025	Debit Card	    Backstage	    2053.47
-Global Beats Festival	2025	Debit Card	    General	        2596.59
-Global Beats Festival	2025	Debit Card	    VIP	            2816.73
-Future Pulse	2026	Bank    Transfer	    Backstage	    513.95
-Future Pulse	2026	Bank    Transfer	    General	        196.82
-Future Pulse	2026	Bank    Transfer	    VIP	            504.45
-Future Pulse	2026	Credit  Card	        Backstage	    95.89
-Future Pulse	2026	Credit  Card	        General	        594.37
-Future Pulse	2026	Credit  Card	        VIP	            326.14
-Future Pulse	2026	Debit   Card	        Backstage	    205.63
-Future Pulse	2026	Debit   Card	        General	        343.84
-Unity Fest	    2027	Bank    Transfer	    Backstage	    399.29
-Unity Fest	    2027	Bank    Transfer	    General	        120.97
-Unity Fest	    2027	Bank    Transfer	    VIP	            197.34
-Unity Fest	    2027	Credit  Card	        Backstage	    316.06
-Unity Fest	    2027	Credit  Card	        General	        197.74
-Unity Fest	    2027	Credit  Card	        VIP	            217.08
-Unity Fest	    2027	Debit   Card	        Backstage	    115.80
-Unity Fest	    2027	Debit   Card	        General	        124.49
-Unity Fest	    2027	Debit   Card	        VIP	            130.61
+Electro World	2025	Bank Transfer	Backstage	240.50
+Electro World	2025	Bank Transfer	General	180.48
+Electro World	2025	Bank Transfer	VIP	466.96
+Electro World	2025	Credit Card	Backstage	411.44
+Electro World	2025	Credit Card	General	443.25
+Electro World	2025	Credit Card	VIP	243.59
+Electro World	2025	Debit Card	Backstage	620.33
+Electro World	2025	Debit Card	General	210.43
+Electro World	2025	Debit Card	VIP	639.39
+Folk Routes	2025	Bank Transfer	Backstage	391.63
+Folk Routes	2025	Bank Transfer	General	571.02
+Folk Routes	2025	Credit Card	Backstage	287.63
+Folk Routes	2025	Credit Card	VIP	502.99
+Folk Routes	2025	Debit Card	Backstage	188.83
+Folk Routes	2025	Debit Card	General	555.83
+Folk Routes	2025	Debit Card	VIP	550.53
+Global Beats Festival	2025	Bank Transfer	Backstage	1064.74
+Global Beats Festival	2025	Bank Transfer	General	661.38
+Global Beats Festival	2025	Bank Transfer	VIP	93.77
+Global Beats Festival	2025	Credit Card	Backstage	123.04
+Global Beats Festival	2025	Credit Card	General	589.59
+Global Beats Festival	2025	Credit Card	VIP	527.98
+Global Beats Festival	2025	Debit Card	Backstage	294.61
+Global Beats Festival	2025	Debit Card	General	281.09
+Global Beats Festival	2025	Debit Card	VIP	165.82
+Indie Rising	2025	Bank Transfer	Backstage	137.10
+Indie Rising	2025	Bank Transfer	General	346.65
+Indie Rising	2025	Bank Transfer	VIP	166.31
+Indie Rising	2025	Credit Card	Backstage	259.36
+Indie Rising	2025	Credit Card	General	140.42
+Indie Rising	2025	Credit Card	VIP	247.03
+Indie Rising	2025	Debit Card	Backstage	70.65
+Indie Rising	2025	Debit Card	VIP	618.39
+Island Vibes Festival	2025	Bank Transfer	Backstage	535.70
+Island Vibes Festival	2025	Bank Transfer	General	97.92
+Island Vibes Festival	2025	Bank Transfer	VIP	450.73
+Island Vibes Festival	2025	Credit Card	Backstage	567.51
+Island Vibes Festival	2025	Credit Card	General	274.07
+Island Vibes Festival	2025	Credit Card	VIP	184.79
+Island Vibes Festival	2025	Debit Card	Backstage	55.93
+Island Vibes Festival	2025	Debit Card	General	406.31
+Island Vibes Festival	2025	Debit Card	VIP	84.16
+Jazz & Beyond	2025	Bank Transfer	Backstage	266.69
+Jazz & Beyond	2025	Bank Transfer	General	130.80
+Jazz & Beyond	2025	Bank Transfer	VIP	221.83
+Jazz & Beyond	2025	Credit Card	Backstage	322.54
+Jazz & Beyond	2025	Credit Card	General	395.82
+Jazz & Beyond	2025	Credit Card	VIP	421.47
+Jazz & Beyond	2025	Debit Card	Backstage	75.70
+Jazz & Beyond	2025	Debit Card	General	348.85
+Jazz & Beyond	2025	Debit Card	VIP	81.43
+Rhythm Nation	2025	Bank Transfer	Backstage	274.04
+Rhythm Nation	2025	Bank Transfer	General	131.41
+Rhythm Nation	2025	Bank Transfer	VIP	299.65
+Rhythm Nation	2025	Credit Card	Backstage	367.61
+Rhythm Nation	2025	Credit Card	VIP	271.39
+Rhythm Nation	2025	Debit Card	Backstage	559.88
+Rhythm Nation	2025	Debit Card	General	430.93
+Rhythm Nation	2025	Debit Card	VIP	237.34
+Sunset Soundscapes	2025	Bank Transfer	Backstage	281.90
+Sunset Soundscapes	2025	Bank Transfer	General	226.14
+Sunset Soundscapes	2025	Bank Transfer	VIP	290.54
+Sunset Soundscapes	2025	Credit Card	Backstage	108.84
+Sunset Soundscapes	2025	Credit Card	General	151.48
+Sunset Soundscapes	2025	Credit Card	VIP	462.28
+Sunset Soundscapes	2025	Debit Card	General	207.36
+Sunset Soundscapes	2025	Debit Card	VIP	439.67
+Future Pulse	2026	Bank Transfer	Backstage	513.95
+Future Pulse	2026	Bank Transfer	General	196.82
+Future Pulse	2026	Bank Transfer	VIP	314.18
+Future Pulse	2026	Credit Card	Backstage	279.46
+Future Pulse	2026	Credit Card	General	506.15
+Future Pulse	2026	Credit Card	VIP	459.08
+Future Pulse	2026	Debit Card	Backstage	393.17
+Future Pulse	2026	Debit Card	General	343.84
+Unity Fest	2027	Bank Transfer	Backstage	399.29
+Unity Fest	2027	Bank Transfer	General	120.97
+Unity Fest	2027	Bank Transfer	VIP	387.61
+Unity Fest	2027	Credit Card	Backstage	316.06
+Unity Fest	2027	Credit Card	General	357.52
+Unity Fest	2027	Credit Card	VIP	217.08
+Unity Fest	2027	Debit Card	Backstage	115.80
+Unity Fest	2027	Debit Card	General	280.28
+Unity Fest	2027	Debit Card	VIP	130.61

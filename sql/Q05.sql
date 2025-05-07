@@ -10,5 +10,4 @@ JOIN Event e ON e.event_id = perf.event_id
 JOIN Festival f ON f.festival_id = e.festival_id
 WHERE  DATEDIFF(NOW(), Birth_date) < 10957
 GROUP BY a.artist_id, a.name
-ORDER BY total_festival_participations DESC
-LIMIT 10;
+ORDER BY total_festival_participations DESC;
