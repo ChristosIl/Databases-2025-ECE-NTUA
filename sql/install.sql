@@ -827,6 +827,109 @@ BEGIN
 END;
 
 //
+
+-- Τrigger to check if the artist or band is available for the performance
+CREATE TRIGGER check_performer_availability_on_insert
+BEFORE INSERT ON Performance
+FOR EACH ROW
+   
+BEGIN   
+    DECLARE v_artist_id INT;
+    DECLARE v_band_id INT;
+    DECLARE conflict_count INT;
+    DECLARE current_year INT;
+    DECLARE years_participated INT;
+
+
+    /*Take the artist-band*/
+    SELECT artist_id, band_id INTO v_artist_id, v_band_id
+    FROM Performs
+    WHERE performs_id = NEW.performs_id;
+
+    /*Take the year of the festival*/
+    SELECT f.year INTO current_year
+    FROM Event e
+    JOIN Festival f ON f.festival_id = e.festival_id
+    WHERE e.event_id = NEW.event_id;
+
+    IF v_artist_id IS NOT NULL THEN
+        SELECT COUNT(*) INTO conflict_count
+        FROM Performance p
+        JOIN Performs pf ON pf.performs_id = p.performs_id
+        JOIN Event e ON e.event_id = p.event_id
+        JOIN Event new_e ON new_e.event_id = NEW.event_id
+        WHERE pf.artist_id = v_artist_id
+          AND e.event_id != NEW.event_id
+          AND e.event_date = new_e.event_date
+          AND (
+              (NEW.start_time BETWEEN p.start_time AND p.end_time)
+              OR (NEW.end_time BETWEEN p.start_time AND p.end_time)
+              OR (p.start_time BETWEEN NEW.start_time AND NEW.end_time)
+              OR (p.end_time BETWEEN NEW.start_time AND NEW.end_time)
+          );
+
+        IF conflict_count > 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'This artist is already performing elsewhere at an overlapping time.';
+        END IF;
+
+        -- Έλεγχος για συμμετοχή σε 3 συνεχόμενα φεστιβάλ
+        SELECT COUNT(DISTINCT f.year) INTO years_participated
+        FROM Performance p
+        JOIN Performs pf ON pf.performs_id = p.performs_id
+        JOIN Event e ON e.event_id = p.event_id
+        JOIN Festival f ON f.festival_id = e.festival_id
+        WHERE pf.artist_id = v_artist_id
+        AND f.year IN (current_year - 1, current_year - 2,current_year - 3);
+
+        -- Αν βρεθούν και τα δύο προηγούμενα έτη, απορρίπτουμε την εισαγωγή
+        IF years_participated = 3 THEN
+                SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT = 'Artist cannot participate in 4 consecutive years.';
+        END IF;
+
+    ELSEIF v_band_id IS NOT NULL THEN
+        SELECT COUNT(*) INTO conflict_count
+        FROM Performance p
+        JOIN Performs pf ON pf.performs_id = p.performs_id
+        JOIN Event e ON e.event_id = p.event_id
+        JOIN Event new_e ON new_e.event_id = NEW.event_id
+        WHERE pf.band_id = v_band_id
+          AND e.event_id != NEW.event_id
+          AND e.event_date = new_e.event_date
+          AND (
+              (NEW.start_time BETWEEN p.start_time AND p.end_time)
+              OR (NEW.end_time BETWEEN p.start_time AND p.end_time)
+              OR (p.start_time BETWEEN NEW.start_time AND NEW.end_time)
+              OR (p.end_time BETWEEN NEW.start_time AND NEW.end_time)
+          );
+
+        IF conflict_count > 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'This band is already performing elsewhere at an overlapping time.';
+        END IF;
+
+        -- Έλεγχος για 3 συνεχόμενες χρονιές
+        SELECT COUNT(DISTINCT f.year) INTO years_participated
+        FROM Performance p
+        JOIN Performs pf ON pf.performs_id = p.performs_id
+        JOIN Event e ON e.event_id = p.event_id
+        JOIN Festival f ON f.festival_id = e.festival_id
+        WHERE pf.band_id = v_band_id
+          AND f.year IN (current_year - 1, current_year - 2, current_year - 3);
+
+        IF years_participated = 3 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Band cannot participate in 4 consecutive years.';
+        END IF;
+    END IF;
+
+
+    
+
+END;
+
+//
 DELIMITER ;
 
 /* All seem to work. Check the status in resale and demand queue tables */
