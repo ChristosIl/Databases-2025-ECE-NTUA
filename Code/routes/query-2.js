@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query2 = await conn.query(
+        const queryString = 
             `
             SELECT
                 a.artist_id,
@@ -35,7 +35,9 @@ router.get('/', async (req, res)=> {
             ORDER BY a.artist_id;
 
             `
-        );
+        
+        const query2 = await conn.query(queryString);
+
 
         if(!query2 || query2.length === 0)
         {
@@ -45,7 +47,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-2', { query2 });
+        res.render('query-2', { query2, queryString });
     }
     catch (err)
     {

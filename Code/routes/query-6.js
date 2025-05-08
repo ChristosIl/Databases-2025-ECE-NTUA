@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query6 = await conn.query(
+        const queryString =  
             `
             SELECT
                 v.name AS Visitor_Name,
@@ -35,7 +35,8 @@ router.get('/', async (req, res)=> {
                 p.performance_id, p.type_of_performance, p.start_time 
             ORDER BY e.event_name, p.start_time;
             `
-        );
+
+        const query6 = await conn.query(queryString);
 
         if(!query6 || query6.length === 0)
         {
@@ -45,7 +46,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-6', { query6 });
+        res.render('query-6', { query6, queryString });
     }
     catch (err)
     {

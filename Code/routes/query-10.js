@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query10 = await conn.query(
+        const queryString =  
             `
                WITH all_tuples_of_mg 
                 AS (
@@ -33,7 +33,7 @@ router.get('/', async (req, res)=> {
                 ORDER BY Number_Appeared DESC
                 LIMIT 3;
             `
-        );
+        const query10 = await conn.query(queryString);
 
         if(!query10 || query10.length === 0)
         {
@@ -43,7 +43,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-10', { query10 });
+        res.render('query-10', { query10, queryString });
     }
     catch (err)
     {

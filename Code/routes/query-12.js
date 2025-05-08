@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query12 = await conn.query(
+        const queryString = 
             `
                 WITH Staff_Needs AS (
                     SELECT
@@ -48,7 +48,7 @@ router.get('/', async (req, res)=> {
                 ORDER BY event_date, staff_role_id;
 
             `
-        );
+        const query12 = await conn.query(queryString);
 
         if(!query12 || query12.length === 0)
         {
@@ -58,7 +58,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-12', { query12 });
+        res.render('query-12', { query12, queryString });
     }
     catch (err)
     {

@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query11 = await conn.query(
+        const queryString =  
             `
                 WITH max_participations_per_artist
                 AS(
@@ -38,7 +38,7 @@ router.get('/', async (req, res)=> {
                 ORDER BY Total_performances DESC;
 
             `
-        );
+        const query11 = await conn.query(queryString);
 
         if(!query11 || query11.length === 0)
         {
@@ -48,7 +48,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-11', { query11 });
+        res.render('query-11', { query11, queryString });
     }
     catch (err)
     {

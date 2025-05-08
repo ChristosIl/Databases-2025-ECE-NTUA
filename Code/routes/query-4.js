@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query4 = await conn.query(
+        const queryString = 
             `
                 SELECT
                     a.name AS Performer_Name,
@@ -25,7 +25,7 @@ router.get('/', async (req, res)=> {
                 GROUP BY a.name;
 
             `
-        );
+        const query4 = await conn.query(queryString);
 
         if(!query4 || query4.length === 0)
         {
@@ -35,7 +35,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-4', { query4 });
+        res.render('query-4', { query4, queryString });
     }
     catch (err)
     {

@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query5 = await conn.query(
+        const queryString = 
             `
             SELECT 
                 a.artist_id, a.name AS Artist_name,
@@ -26,7 +26,8 @@ router.get('/', async (req, res)=> {
             ORDER BY total_festival_participations DESC
             ;
             `
-        );
+   
+        const query5 = await conn.query(queryString); 
 
         if(!query5 || query5.length === 0)
         {
@@ -36,7 +37,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-5', { query5 });
+        res.render('query-5', { query5, queryString });
     }
     catch (err)
     {

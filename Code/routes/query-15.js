@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query15 = await conn.query(
+        const queryString =  
             `
                 WITH VisitorScores AS (
                     SELECT
@@ -64,7 +64,8 @@ router.get('/', async (req, res)=> {
                 ORDER BY Total_Rating_Score DESC
                 LIMIT 5;
             `
-        );
+        
+        const query15 = await conn.query(queryString);
 
         if(!query15 || query15.length === 0)
         {
@@ -74,7 +75,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-15', { query15 });
+        res.render('query-15', { query15, queryString });
     }
     catch (err)
     {

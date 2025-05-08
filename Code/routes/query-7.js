@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query7 = await conn.query(
+        const queryString = 
             `
             SELECT
                 f.festival_id, f.name AS FESTIVAL,
@@ -27,7 +27,7 @@ router.get('/', async (req, res)=> {
             LIMIT 1;
 
             `
-        );
+        const query7 = await conn.query(queryString);
 
         if(!query7 || query7.length === 0)
         {
@@ -37,7 +37,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-7', { query7 });
+        res.render('query-7', { query7, queryString });
     }
     catch (err)
     {

@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query13 = await conn.query(
+        const queryString =  
             `
                 Select 
                     a.artist_id, a.name,
@@ -27,8 +27,10 @@ router.get('/', async (req, res)=> {
                 HAVING COUNT(DISTINCT c.continent_id) >= 3
                 ORDER BY Continents_participated DESC;
             `
-        );
+         
 
+        const query13 = await conn.query(queryString);
+        
         if(!query13 || query13.length === 0)
         {
             return res.render('query-13', {
@@ -37,7 +39,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-13', { query13 });
+        res.render('query-13', { query13, queryString });
     }
     catch (err)
     {

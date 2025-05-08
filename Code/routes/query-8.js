@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query8 = await conn.query(
+        const queryString =  
             `
                SELECT 
                     s.staff_id, 
@@ -29,7 +29,7 @@ router.get('/', async (req, res)=> {
                 WHERE s.staff_role_id = 3;
 
             `
-        );
+        const query8 = await conn.query(queryString);
 
         if(!query8 || query8.length === 0)
         {
@@ -39,7 +39,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-8', { query8 });
+        res.render('query-8', { query8, queryString });
     }
     catch (err)
     {

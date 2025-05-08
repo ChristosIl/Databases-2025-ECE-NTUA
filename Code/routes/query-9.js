@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query9 = await conn.query(
+        const queryString =  
             `
                 WITH count_of_valid_visits_per_visitor_for_specific_year
                 AS (
@@ -34,8 +34,9 @@ router.get('/', async (req, res)=> {
                 GROUP BY Number_of_valid_visits_per_year
                 ORDER BY Number_of_valid_visits_per_year DESC ;
             `
-        );
-
+        const query9 = await conn.query(queryString);
+         
+        
         if(!query9 || query9.length === 0)
         {
             return res.render('query-9', {
@@ -44,7 +45,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-9', { query9 });
+        res.render('query-9', { query9, queryString });
     }
     catch (err)
     {

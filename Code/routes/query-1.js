@@ -11,8 +11,7 @@ router.get('/', async (req, res)=>{
         conn = await pool.getConnection();
         console.log("Connected.");    
         
-        const  query1 = await conn.query(
-            `
+        const queryString = `
             SELECT 
                 f.name AS festival_name,
                 f.year AS festival_year,
@@ -25,11 +24,11 @@ router.get('/', async (req, res)=>{
             LEFT JOIN Payment_method pm ON pm.payment_method_id = t.payment_method_id
             LEFT JOIN Ticket_type tt ON tt.ticket_type_id = t.ticket_type_id
             GROUP BY f.festival_id, f.name, f.year, pm.name, tt.name
-            ORDER BY f.year, f.name, pm.name, tt.name
-            `
-        );
+            ORDER BY f.year, f.name, pm.name, tt.name;
+            `;
+        const query1 = await conn.query(queryString);
         console.log("Query result:", query1);
-        res.render('query-1', { query1 });
+        res.render('query-1', { query1, queryString });
         
     }
     catch(err)

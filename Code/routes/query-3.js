@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
         conn = await pool.getConnection();
-        const query3 = await conn.query(
+        const queryString = 
             `
                 SELECT 
                     a.artist_id, a.name AS Artist_Name,
@@ -28,8 +28,7 @@ router.get('/', async (req, res)=> {
                 GROUP BY a.artist_id, f.festival_id
                 HAVING COUNT(*) > 2;
             `
-        );
-
+        const query3 = await conn.query(queryString);
         if(!query3 || query3.length === 0)
         {
             return res.render('query-3', {
@@ -38,7 +37,7 @@ router.get('/', async (req, res)=> {
             });
         }
 
-        res.render('query-3', { query3 });
+        res.render('query-3', { query3, queryString });
     }
     catch (err)
     {

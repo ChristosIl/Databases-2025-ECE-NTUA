@@ -11,7 +11,7 @@ router.get('/', async (req, res)=> {
     try
     {   
          conn = await pool.getConnection();
-         const query14 = await conn.query(
+         const queryString =  
              `
                 WITH GenreAppearances AS (
                     SELECT
@@ -45,7 +45,7 @@ router.get('/', async (req, res)=> {
                 WHERE year = prev_year + 1 AND appearances = prev_appearances;
 
              `
-         );
+        const query14 = await conn.query(queryString);
 
          if(!query14 || query14.length === 0)
          {
@@ -54,7 +54,7 @@ router.get('/', async (req, res)=> {
                  message: 'No results found'
              });
          }
-        res.render('query-14', { query14 });
+        res.render('query-14', { query14, queryString });
         res.render('query-14');
     }
     catch (err)
