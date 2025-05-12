@@ -546,7 +546,7 @@ END;
 
 //
 
-
+-- 
 CREATE TRIGGER trg_after_resale_insert
 AFTER INSERT ON Resale_Queue
 FOR EACH ROW
@@ -623,7 +623,7 @@ BEGIN
 END;
 
 //
-
+-- 
 CREATE TRIGGER trg_after_demand_queue_insert
 AFTER INSERT ON Demand_Queue
 FOR EACH ROW
@@ -705,7 +705,7 @@ BEGIN
 END;
 
 //
-
+-- Trigger to check if the brake between two performances is at least 5 minutes and maximum 30 minutes
 CREATE TRIGGER chk_after_insert_to_performance_for_brake
 BEFORE INSERT ON Performance
 FOR EACH ROW
@@ -730,7 +730,7 @@ END;
 
 //
 
---
+-- Trigger to check if the staff member is available for the event
 CREATE TRIGGER check_staff_availability_trigger
 BEFORE INSERT ON Works_on
 FOR EACH ROW 
@@ -927,6 +927,29 @@ BEGIN
 
     
 
+END;
+
+//
+
+-- Trigger to check if the festival is in a different location each year
+CREATE TRIGGER trg_check_different_location_per_year
+BEFORE INSERT ON Festival
+FOR EACH ROW
+BEGIN
+    DECLARE prev_location INT;
+
+    -- find the location of the previous year's festival
+    SELECT location_id INTO prev_location
+    FROM Festival
+    WHERE name = NEW.name
+      AND year = NEW.year - 1
+    LIMIT 1;
+
+    -- CHeck if the previous location is the same as the new one
+    IF prev_location IS NOT NULL AND prev_location = NEW.location_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Το φεστιβάλ δεν μπορεί να διεξαχθεί στην ίδια τοποθεσία δύο συνεχόμενα έτη.';
+    END IF;
 END;
 
 //
