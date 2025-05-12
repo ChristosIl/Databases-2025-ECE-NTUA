@@ -243,11 +243,11 @@
         ('Drumline Dome', 'Dome covered in sound-absorbing panels.', 90, 'Strobe grid system', 'http://dummyimage.com/234x100.png', 'Drumline Dome setup with strobe grid system.'),
         ('Festival Frontier', 'Edge-of-venue spot for indie acts.', 95, 'Ambient light columns', 'http://dummyimage.com/245x100.png', 'Festival Frontier setup with ambient light columns.');
 
-    /* Testing values for resale queue example
+    /* Testing values for resale queue example*/
     INSERT INTO Stage (name, description, max_capacity, infos_technical_equipment, photo_url, photo_description)
     VALUES
     ('test-stage','something', 3, 'fs', 'gds','sdg'); 
-    */
+    
 
     -- Populate Location Table (15 values)
     INSERT INTO Location (address, city, longitude, latitude, country, continent_id, photo_url, photo_description)
@@ -329,11 +329,11 @@
     (39, 10, 9, 'Peace Parade', '2027-06-11', 4, 'http://dummyimage.com/200x100.png/ffc107/000000', 'Celebrating harmony and peace.'),
     (40, 10, 10, 'Voices of Unity', '2027-06-12', 3, 'http://dummyimage.com/200x100.png/6f42c1/ffffff', 'Diverse vocal groups unite.');
 
-    /* Testing values for resale queue example
+    /* Testing values for resale queue example*/
     INSERT INTO Event (event_id, festival_id, stage_id, event_name, event_date, duration, photo_url, photo_description)
     VALUES 
     (41, 1, 31, 'test-event', '2025-09-16', 3,'sd','sd');
-    */
+    
     -- Populate Works On Table -- 
     INSERT INTO Works_on (staff_id, stage_id, event_id) 
     VALUES
@@ -1644,13 +1644,13 @@
     (219, 33, 27, 3, '2025-05-21', 186.50, 3, '10000000002219', FALSE, 'https://example.com/ticket_photos/ticket_219.jpg', 'Ticket photo 219'),
     (220, 33, 20, 3, '2025-05-03', 54.00, 3, '10000000002220', FALSE, 'https://example.com/ticket_photos/ticket_220.jpg', 'Ticket photo 220');
 
-    /* Testing Values for resale queue
+    /* Testing Values for resale queue*/
     INSERT INTO Ticket (ticket_id, event_id, visitor_id, ticket_type_id, purchase_date, price, payment_method_id, ean_code, used, photo_url, photo_description)
     VALUES
     (221, 41, 1, 2,'2025-06-02 14:30:00', 100, 1, '1234567890123', FALSE, 'ASF', 'ASF'),
     (222, 41, 2, 2,'2025-06-02 14:30:00', 100, 1, '1234567890123', FALSE, 'ASF', 'ASF'),
     (223, 41, 3, 3,'2025-06-02 14:30:00', 100, 1, '1234567890123', FALSE, 'ASF', 'ASF');
-    */
+    
 
     INSERT INTO Rating (rating_id, ticket_id, performance_id, interpretation_rating, sound_and_lighting_rating, stage_presence_rating, organization_rating, overall_impression, photo_url, photo_description) VALUES
     (1, 4, 18, 4, 5, 5, 4, 5, NULL, NULL),    
@@ -1818,11 +1818,12 @@
     /*To check the trigger for resale queue insertion run first the demand queue inserts and then these*/
     INSERT INTO Resale_Queue (resale_id, ticket_id, seller_id, listing_date, price, status) 
     VALUES 
-    (1, 2, 1, CURDATE(), 130.00, FALSE),
+    (1, 221, 1, CURDATE(), 100.00, FALSE);
+    /*(1, 2, 1, CURDATE(), 130.00, FALSE),
     (2, 123, 30, CURDATE(), 63.31, FALSE),
     (3, 203, 11, CURDATE(), 194.58, FALSE),
     (4, 10, 5, CURDATE(), 51.05, FALSE);
-
+    */
     INSERT INTO Demand_Queue (demand_id, buyer_id, preferred_ticket_type, preferred_event_id, request_date, status)
     VALUES
     (1, 1, 1, 1, '2025-04-01', FALSE),
