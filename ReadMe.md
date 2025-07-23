@@ -1,59 +1,32 @@
-ReadMe
-
-
-
-
-<h1 align="center">Festival Management RDBMS.</h1>
-
-<p align="center">
-  <!-- Node.js badge -->
-  <a><img src="https://img.shields.io/badge/Node.js-v22.15.0-brightgreen" alt="Node.js">
-  </a>   
-  <!-- npm badge -->
-  <a><img src="https://img.shields.io/badge/npm-v10.9.2-blue" alt="npm">
-  </a>
-  <!-- MariaDB badge -->
-  <a><img src="https://img.shields.io/badge/Database-MariaDB-lightblue" alt="MariaDB">
-  </a>
-  <!-- Express.js badge -->
-  <a><img src="https://img.shields.io/badge/Framework-Express-black" alt="Express.js">
-  </a>
-  <!-- Docker badge -->
-  <a><img src="https://img.shields.io/badge/Container-Docker-blue" alt="Docker">
-  </a>
-  <!-- EJS badge -->
-  <a><img src="https://img.shields.io/badge/Template-EJS-yellow" alt="EJS">
-  </a>  
-</p>
-
-<p align="center">
-  <a href="#Description">Description</a> •
-  <a href="#technologies">Technologies</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#ΠΑΡΑΔΟΧΕΣ">Παραδοχές</a> •
-</p>
-
+<h1 align="center">Festival Management RDBMS</h1> 
+<p align="center"> 
+<!-- Node.js badge --> <a><img src="https://img.shields.io/badge/Node.js-v22.15.0-brightgreen" alt="Node.js"></a> 
+<!-- npm badge --> <a><img src="https://img.shields.io/badge/npm-v10.9.2-blue" alt="npm"></a>
+<!-- MariaDB badge --> <a><img src="https://img.shields.io/badge/Database-MariaDB-lightblue" alt="MariaDB"></a>
+<!-- Express.js badge --> <a><img src="https://img.shields.io/badge/Framework-Express-black" alt="Express.js"></a> 
+<!-- Docker badge --> <a><img src="https://img.shields.io/badge/Container-Docker-blue" alt="Docker"></a> 
+<!-- EJS badge --> <a><img src="https://img.shields.io/badge/Template-EJS-yellow" alt="EJS"></a> </p> <p align="center">
+<a href="#description">Description</a> • <a href="#technologies">Technologies</a> • <a href="#how-to-use">How To Use</a> • <a href="#assumptions">Assumptions</a> </p>
 
 ## Description
 
-Η παρούσα εργασία αφορά την υλοποίηση ενός σχεσιακού συστήματος βάσης δεδομένων (RDBMS) για τη διαχείριση μουσικών φεστιβάλ. Κάθε φεστιβάλ περιλαμβάνει διάφορα events, τα οποία με τη σειρά τους αποτελούνται από performances solo καλλιτεχνών ή συγκροτημάτων. Οι επισκέπτες (visitors) για να συμμετάσχουν πρέπει να αγοράσουν εισιτήριο, με δυνατότητα μεταπώλησης σε περιπτώσεις που το event είναι sold out, μέσω του συστήματος "Resale Queue".
+This project implements a relational database management system (RDBMS) for managing music festivals. Each festival consists of various events, which in turn include performances by solo artists or bands. Visitors must purchase a ticket to participate, and if an event is sold out, they can resell their ticket via the "Resale Queue" system.
 
 ## Technologies
-* MariaDB: Για την υλοποίηση της βάσης δεδομένων, μέσω Docker container.
 
-* Node.js & Express: Για την κατασκευή του backend που διαχειρίζεται τα queries και παρουσιάζει τα αποτελέσματα.
+    MariaDB: Used for the database implementation, deployed via Docker container.
 
-* EJS (Embedded JavaScript): Για την απόδοση δυναμικών σελίδων στον client και την προβολή των αποτελεσμάτων SQL σε φιλική μορφή.
+    Node.js & Express: Used to build the backend, which handles queries and displays results.
 
-* Docker: Για την ανάπτυξη του περιβάλλοντος της βάσης δεδομένων με συνέπεια και ευκολία.
+    EJS (Embedded JavaScript): Used to render dynamic pages on the client side and present SQL query results in a user-friendly way.
+
+    Docker: Used to consistently and easily deploy the database environment.
 
 ## How To Use
-Για να κάνετε clone και να εκτελέσετε με επιτυχία την εφαρμογή θα πρέπει:
 
-Να έχετε εγκατεστημένα τα:
+To clone and successfully run the application, you must have:
 
-* Docker και Docker compose 
-
+* Docker and Docker Compose installed.
 
 ```bash
 # Clone this repository
@@ -71,28 +44,20 @@ $ docker compose up -d
 
 ```
 
-* Μεταβείτε στο http://localhost:8080 για να εξερευνήσετε τη βάση δεδομένων μέσω Adminer (το port 8080 έχει ορισθεί για το Adminer στο compose.yaml)
+* Navigate to http://localhost:8080 to explore the database using Adminer (port 8080 is assigned to Adminer in compose.yaml).
 
-* Μεταβείτε στο http://localhost:4000 για να δείτε το frontend με τα αποτελέσματα των SQL ερωτημάτων
+* Navigate to http://localhost:4000 to access the frontend displaying the results of the SQL queries.
 
-
-
-## ΠΑΡΑΔΟΧΕΣ 
+## Assumptions
 
 ----
-* Στο πλαίσιο του σχεδιασμού του συστήματος, θεωρήθηκε ότι το Pulse University Festival μπορεί να διοργανώνει πολλαπλα φεστιβάλ, κάθε ένα με το δικό του έτος, τοποθεσία και χαρακτηριστικά.
-Για το λόγο αυτό και δεδομένου ότι θεωρούμε την έναρξη της εφαρμογής από το 2025, τα φεστιβάλ του Pulse University αρχίζουν από το έτος 2025. Επομένως θα θεωρήσουμε ως συμμετοχές, αυτές για το έτος του 2025 θεωρώντας ότι θα είναι αυτό που τελείωσε μετά το πέρας του χρόνου.
-
+* As part of the system design, we assumed that the Pulse University Festival may host multiple festivals, each with its own year, location, and characteristics.
+Since the application starts in 2025, we assume that festivals begin in 2025. Therefore, we consider the 2025 festivals as the relevant participations, even if the year has already passed.
 ----
-* Θεωρούμε ότι ένας staff member δεν μπορεί να δουλέψει σε άλλο event την ίδια μέρα. Έτσι γίνονται κατάλληλα οι εισαγωγές και αντίστοιχα υπάρχει περιορισμός με κατάλληλο trigger
-
+* It is assumed that a staff member cannot work at more than one event on the same day. This is enforced via appropriate insert logic and constraints using triggers.
 ----
-* Για το προσωπικό κρατήσαμε τους περιορισμούς που ζητούνται, ενώ για το τεχνικό προσωπικό δεν ορίσαμε κάποιο κατώτατο όριο. Για τον λόγο αυτό σε αντίστοιχο query ή κάποια μοργή παρουσίασης μπορεί να εμφανιστεί ότι μία σκηνή έχει 0 τεχνικό προσωπικό (δεν χρειάζεται)
-
+* We applied the required constraints for staff assignments. For technical staff, however, no minimum requirement was defined. As a result, a scene may appear with 0 technical staff in queries or presentations (and that is acceptable).
 ----
-* Για οποιδήποτε query που ζητούσε παρουσίαση δεδομένων για καλλιτέχνες, οι απαντήσεις υλοποιήθηκαν να παρουσιάζουν δεδομένα για τους artist. Σε περίπτωση που ζητούνταν και band ο τρόπος υλοποίησης είναι παρόμοιος αν όχι ίδιος
-
+* For queries related to artists, results are implemented to show data for solo artists. If band data is also required, the implementation approach is similar or identical.
 ----
-* Καλύφθηκαν όλες οι απαιτήσεις της εκφώνησης είτε από περιορισμούς είτε από triggers
-
-
+* All requirements of the assignment have been met either through constraints or triggers.
