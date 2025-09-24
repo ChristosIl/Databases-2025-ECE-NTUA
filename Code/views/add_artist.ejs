@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Artist</title>
+</head>
+<body>
+  <h1>Add New Artist</h1>
+
+  <!-- αν δεν βάλω nonvalidate θα το κάνει μόνο του το html 5-->
+  <form action="/artists/add" method="POST" novalidate>
+
+    <label>Id:</label>
+    <input type="number" name="id" required><br><br>
+
+    <label>Name:</label>
+    <input type="text" name="name" required><br><br>
+
+    <label>birthdate:</label>
+    <input type="date" name="birthdate"><br><br>
+
+    <label>Photo_url:</label>
+    <input type="url" name="photo_url"><br><br>
+
+    <label>Photo_descr:</label>
+    <input type="text" name="photo_descr"><br><br>
+
+    <label>Are they solo:</label>
+    <input type="radio" name="is_solo" value="1" required> Yes
+    <input type="radio" name="is_solo" value="0" required> No
+
+    <br><br>
+
+    <button type="submit">Add</button>
+  </form>
+  
+  <br>
+  <a href="/artists">Back to list</a>
+
+  <script>
+    window.addEventListener("load", ()=>{
+
+        console.log("Φόρτωσε το Add-Artist");
+        
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (event)=>{
+            const id = document.querySelector("input[name='id']").value.trim();
+            const name = document.querySelector("input[name='name']").value.trim();
+            const birthdate = document.querySelector("input[name='birthdate']").value.trim();
+            const is_solo = document.querySelector("input[name='is_solo']:checked");
+            const photo_url = document.querySelector("input[name='photo_url']").value.trim();
+            const photo_descr = document.querySelector("input[name='photo_descr']").value.trim();
+
+            if(!id || !name || !birthdate || !is_solo || !photo_url || !photo_descr){
+                event.preventDefault(); // stops submit
+                console.log("EMpty");
+                alert("fill up all the fields");
+            }
+        })
+    })
+  </script>
+</body>
+</html>
