@@ -27,13 +27,14 @@ router.get('/', async (req, res)=> {
                 WHERE type_of_performance = 2 /* Set for warm up */
                 GROUP BY a.artist_id, f.festival_id
                 HAVING COUNT(*) > 2;
-            `
+            `;
         const query3 = await conn.query(queryString);
         if(!query3 || query3.length === 0)
         {
             return res.render('query-3', {
                 query3: [],
-                message: 'No results found'
+                message: 'No results found',
+                queryString
             });
         }
 

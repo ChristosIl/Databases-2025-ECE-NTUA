@@ -23,4 +23,16 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/add', async (req, res)=>{
+    let conn;
+
+    try{
+        conn = await pool.getConnection();
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).send('Database error');
+    }
+})
+
 module.exports = router;

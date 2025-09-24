@@ -4,6 +4,8 @@ SELECT
     f.name AS FESTIVAL,
     f.festival_id,
     e.event_name,
+     /*    GROUP_CONCAT(DISTINCT e.event_name ORDER BY e.event_name SEPARATOR ', ') AS Events, */
+    /* Δεν υπάρχει περιορισμός στο έτος άρα βρίσκει και μελλοντικές συμμετοχές */
     COUNT(*) AS Warm_Up_Count
 FROM Artist a 
 JOIN Performs p ON p.artist_id = a.artist_id

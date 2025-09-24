@@ -7,6 +7,8 @@ SELECT
     e.event_name AS Event_Name,
     p.performance_id,
     p.type_of_performance,
+    /*Το average δεν χρειάζεται γιατί έχουμε τον περιορισμό ότι δεν μπορεί να έχει δύο ίδια tikcets για την */
+    /*ίδια παράσταση*/
     AVG((r.interpretation_rating + r.sound_and_lighting_rating + r.stage_presence_rating + r.organization_rating + r.overall_impression) / 5.0)
         AS Avg_Visitor_Total_Rating_Per_Performance
 FROM Rating r

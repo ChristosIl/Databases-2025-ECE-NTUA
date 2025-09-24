@@ -77,6 +77,26 @@
             color: blue;
             text-decoration: underline;
         }
+
+        .LowBar{
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: flex-end; /* τα σπρώχνει δεξιά */
+            gap: 20px;                 /* απόσταση μεταξύ τους */
+            padding: 15px;
+        }
+        .Database-Data a{
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 25px;
+            color: black;
+        }
+
+        .Database-Data a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
     </Style>
 </head>
 <body>
@@ -89,7 +109,7 @@
         <!-- <form action="/artists">
             <button type="submit">Show Artists</button>
            </form> -->
-       
+           
            <form action="/query-1">
                <button type="submit">Query 1</button>
            </form>
@@ -150,9 +170,16 @@
                <button type="submit">Query 15</button>
            </form>
     </div>
-    
-    <div class="Log-Out">
+    <div class="LowBar">
+        <div class="Log-Out">
         <a href="/">Log Out</a>
+        </div>
+
+        <div class="Database-Data">
+            <a href="/data">Database-Data</a>
+        </div>
+
     </div>
+    
 </body>
 </html>

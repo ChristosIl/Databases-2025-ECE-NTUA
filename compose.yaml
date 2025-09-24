@@ -2,9 +2,10 @@
 services: 
   mariadb:
     image: mariadb:latest
-    container_name: mariadb_container
+    container_name: mariadb_controller
     restart: always
     environment:
+      TZ: Europe/Athens
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: festival_database
       MYSQL_USER: user
@@ -20,7 +21,7 @@ services:
     container_name: adminer_controller
     restart: always
     ports:
-      - 8080:8080      
+      - 5050:8080      
 
   nodeapp:
     container_name: node_server

@@ -10,8 +10,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Routes 
-// const ArtistsRoutes = require('./routes/artists');
-// app.use('/artists', ArtistsRoutes);
+const ArtistsRoutes = require('./routes/artists');
+app.use('/artists', ArtistsRoutes);
 const query1Route = require('./routes/query-1');
 app.use('/query-1', query1Route);
 const query2Route = require('./routes/query-2');
@@ -44,11 +44,14 @@ const query15Route = require('./routes/query-15');
 app.use('/query-15', query15Route);
 const index = require('./routes/index');
 app.use('/index', index);
+const data = require('./routes/data');
+app.use('/data', data);
 
 // Initial load 
 app.get('/', (req, res) => {
   res.render('Login-Screen', { error: null }); 
 });
+
 
 // Take credentials from the Login Screen through POST
 app.post('/login', (req, res) => {
